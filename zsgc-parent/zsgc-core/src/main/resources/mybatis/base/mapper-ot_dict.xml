@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dictDAO">
+  <resultMap id="dict" type="com.zsgc.core.model.Dict">
+    <result property="id" column="id" />
+    <result property="typeId" column="type_id" />
+    <result property="dictKey" column="dict_key" />
+    <result property="dictValue" column="dict_value" />
+    <result property="dictValue1" column="dict_value1" />
+    <result property="dictValue2" column="dict_value2" />
+    <result property="dictValue3" column="dict_value3" />
+    <result property="sortOrder" column="sort_order" />
+    <result property="memo" column="memo" />
+    <result property="createdAt" column="created_at" />
+    <result property="updatedAt" column="updated_at" />
+  </resultMap>
+
+  <sql id="sql_insert_column_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,id</if>
+      <if test="entity.typeId != null">,type_id</if>
+      <if test="entity.dictKey != null and entity.dictKey != ''">,dict_key</if>
+      <if test="entity.dictValue != null and entity.dictValue != ''">,dict_value</if>
+      <if test="entity.dictValue1 != null and entity.dictValue1 != ''">,dict_value1</if>
+      <if test="entity.dictValue2 != null and entity.dictValue2 != ''">,dict_value2</if>
+      <if test="entity.dictValue3 != null and entity.dictValue3 != ''">,dict_value3</if>
+      <if test="entity.sortOrder != null">,sort_order</if>
+      <if test="entity.memo != null and entity.memo != ''">,memo</if>
+      <if test="entity.createdAt != null">,created_at</if>
+      <if test="entity.createdAt == null">,created_at</if>
+      <if test="entity.updatedAt != null">,updated_at</if>
+      <if test="entity.updatedAt == null">,updated_at</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_insert_property_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,#{entity.id}</if>
+      <if test="entity.typeId != null">,#{entity.typeId}</if>
+      <if test="entity.dictKey != null and entity.dictKey != ''">,#{entity.dictKey}</if>
+      <if test="entity.dictValue != null and entity.dictValue != ''">,#{entity.dictValue}</if>
+      <if test="entity.dictValue1 != null and entity.dictValue1 != ''">,#{entity.dictValue1}</if>
+      <if test="entity.dictValue2 != null and entity.dictValue2 != ''">,#{entity.dictValue2}</if>
+      <if test="entity.dictValue3 != null and entity.dictValue3 != ''">,#{entity.dictValue3}</if>
+      <if test="entity.sortOrder != null">,#{entity.sortOrder}</if>
+      <if test="entity.memo != null and entity.memo != ''">,#{entity.memo}</if>
+      <if test="entity.createdAt != null">,#{entity.createdAt}</if>
+      <if test="entity.createdAt == null">,NOW()</if>
+      <if test="entity.updatedAt != null">,#{entity.updatedAt}</if>
+      <if test="entity.updatedAt == null">,NOW()</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_column_list">
+    id
+    ,type_id
+    ,dict_key
+    ,dict_value
+    ,dict_value1
+    ,dict_value2
+    ,dict_value3
+    ,sort_order
+    ,memo
+    ,created_at
+    ,updated_at
+  </sql>
+
+  <sql id="sql_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="entity != null">
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('id')">
+            ,id = #{entity.id, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.id != null">,id = #{entity.id}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('typeId')">
+            ,type_id = #{entity.typeId, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.typeId != null">,type_id = #{entity.typeId}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('dictKey')">
+            ,dict_key = #{entity.dictKey, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.dictKey != null and entity.dictKey != ''">,dict_key = #{entity.dictKey}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('dictValue')">
+            ,dict_value = #{entity.dictValue, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.dictValue != null and entity.dictValue != ''">,dict_value = #{entity.dictValue}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('dictValue1')">
+            ,dict_value1 = #{entity.dictValue1, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.dictValue1 != null and entity.dictValue1 != ''">,dict_value1 = #{entity.dictValue1}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('dictValue2')">
+            ,dict_value2 = #{entity.dictValue2, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.dictValue2 != null and entity.dictValue2 != ''">,dict_value2 = #{entity.dictValue2}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('dictValue3')">
+            ,dict_value3 = #{entity.dictValue3, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.dictValue3 != null and entity.dictValue3 != ''">,dict_value3 = #{entity.dictValue3}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('sortOrder')">
+            ,sort_order = #{entity.sortOrder, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.sortOrder != null">,sort_order = #{entity.sortOrder}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('memo')">
+            ,memo = #{entity.memo, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.memo != null and entity.memo != ''">,memo = #{entity.memo}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('createdAt')">
+            ,created_at = #{entity.createdAt, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.createdAt != null">,created_at = #{entity.createdAt}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('updatedAt')">
+            ,updated_at = #{entity.updatedAt, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.updatedAt != null">,updated_at = #{entity.updatedAt}</if>
+            <if test="entity.updatedAt == null">,updated_at = NOW()</if>
+          </otherwise>
+        </choose>
+        <if test="!entity.incrementUpdateMap.isEmpty()">
+          ,
+          <foreach collection="entity.incrementUpdateMap" index="key" item="value" separator=",">
+            ${key} = ${key} + #{value}
+          </foreach>
+        </if>
+      </if>
+    </trim>
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null">AND id = #{condition.id}</if>
+      <if test="condition.typeId != null">AND type_id = #{condition.typeId}</if>
+      <if test="condition.dictKey != null and condition.dictKey != ''">AND dict_key = #{condition.dictKey}</if>
+      <if test="condition.dictValue != null and condition.dictValue != ''">AND dict_value = #{condition.dictValue}</if>
+      <if test="condition.dictValue1 != null and condition.dictValue1 != ''">AND dict_value1 = #{condition.dictValue1}</if>
+      <if test="condition.dictValue2 != null and condition.dictValue2 != ''">AND dict_value2 = #{condition.dictValue2}</if>
+      <if test="condition.dictValue3 != null and condition.dictValue3 != ''">AND dict_value3 = #{condition.dictValue3}</if>
+      <if test="condition.sortOrder != null">AND sort_order = #{condition.sortOrder}</if>
+      <if test="condition.memo != null and condition.memo != ''">AND memo = #{condition.memo}</if>
+      <if test="condition.createdAt != null">AND created_at = #{condition.createdAt}</if>
+      <if test="condition.updatedAt != null">AND updated_at = #{condition.updatedAt}</if>
+      <if test="!condition.expressionChainList.empty">
+        AND
+        <foreach collection="condition.expressionChainList" item="expressionChain" separator="OR">
+          <if test="!expressionChain.expressionList.empty">
+            <foreach collection="expressionChain.expressionList" item="expression" separator="AND">
+              <choose>
+                <when test="expression.type == 0">
+                  ${expression.column} ${expression.operator}
+                </when>
+                <when test="expression.type == 1">
+                  ${expression.column} ${expression.operator} #{expression.value}
+                </when>
+                <when test="expression.type == 2">
+                  ${expression.column} ${expression.operator} #{expression.value} AND #{expression.value1}
+                </when>
+                <when test="expression.type == 3">
+                  ${expression.column} ${expression.operator}
+                  <foreach collection="expression.values" item="value" open="(" separator="," close=")">
+                    #{value}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </if>
+        </foreach>
+      </if>
+    </if>
+  </sql>
+
+  <sql id="sql_pagination_start">
+  <![CDATA[
+  ]]>
+  </sql>
+
+  <sql id="sql_pagination_end">
+  <![CDATA[
+    LIMIT #{offset}, #{limit}
+  ]]>
+  </sql>
+
+  <insert id="insert" parameterType="java.util.Map">
+    <selectKey keyProperty="entity.id" resultType="java.lang.Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    INSERT INTO ot_dict (
+      <include refid="sql_insert_column_list" />
+    ) VALUES (
+      <include refid="sql_insert_property_list" />
+    )
+  </insert>
+
+  <select id="get" parameterType="java.util.Map" resultMap="dict">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_dict
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="java.util.Map" resultMap="dict">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_dict
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultMap="dict">
+    <if test="offset != null">
+      <include refid="sql_pagination_start" />
+    </if>
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_dict
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end" />
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(${count_column}) AS count_ FROM ot_dict
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="aggregate" parameterType="java.util.Map" resultType="java.util.HashMap">
+    SELECT ${aggregate_sql} FROM ot_dict
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <update id="update" parameterType="java.util.Map">
+    UPDATE ot_dict
+    <include refid="sql_update_set" />
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </update>
+
+  <update id="updateById" parameterType="java.util.Map">
+    UPDATE ot_dict
+    <include refid="sql_update_set" />
+    WHERE id = #{id}
+  </update>
+
+  <delete id="remove" parameterType="java.util.Map">
+    DELETE FROM ot_dict
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </delete>
+
+  <delete id="removeById" parameterType="java.util.Map">
+    DELETE FROM ot_dict
+    WHERE id = #{id}
+  </delete>
+</mapper>

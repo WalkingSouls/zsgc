@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="taskDAO">
+	<resultMap id="BaseResultMap" type="com.zsgc.core.model.Task">
+		<id column="task_id" jdbcType="INTEGER" property="taskId" />
+		<result column="u_id" jdbcType="INTEGER" property="uId" />
+		<result column="p_id" jdbcType="INTEGER" property="pId" />
+		<result column="task_name" jdbcType="VARCHAR"
+			property="taskName" />
+		<result column="task_state" jdbcType="INTEGER"
+			property="taskState" />
+		<result column="del_state" jdbcType="INTEGER"
+			property="delState" />
+		<result column="task_time" jdbcType="TIMESTAMP"
+			property="taskTime" />
+		<result column="task_type" jdbcType="INTEGER"
+			property="taskType" />
+		<result column="create_time" jdbcType="TIMESTAMP"
+			property="createTime" />
+		<result column="update_time" jdbcType="TIMESTAMP"
+			property="updateTime" />
+		<result column="update_state" jdbcType="INTEGER"
+			property="updateState" />
+		<result column="associated_task" jdbcType="INTEGER"
+			property="associatedTask" />
+		<result column="update_name" jdbcType="VARCHAR"
+			property="updateName" />
+		<result column="warehouse_type" jdbcType="INTEGER"
+			property="warehouseType" />
+		<result column="start_time" jdbcType="TIMESTAMP"
+			property="startTime" />
+		<result column="end_time" jdbcType="TIMESTAMP"
+			property="endTime" />
+		<result column="clock" jdbcType="INTEGER" property="clock" />
+		<result column="share_type" jdbcType="INTEGER"
+			property="shareType" />
+	</resultMap>
+	<resultMap type="com.zsgc.core.model.Task"
+		id="taskDescription" extends="BaseResultMap">
+		<collection property="tdList" javaType="List"
+			ofType="com.zsgc.core.model.TaskDescription">
+			<id column="des_id" jdbcType="INTEGER" property="desId" />
+			<result column="task_id" jdbcType="INTEGER" property="taskId" />
+			<result column="task_description" jdbcType="VARCHAR"
+				property="taskDescription" />
+			<result column="del_state" jdbcType="INTEGER"
+				property="delState" />
+		</collection>
+	</resultMap>
+	<!-- <resultMap type="com.zsgc.core.model.Task" id="taskTime" extends="BaseResultMap"> 
+		<collection property="ttList" javaType="List" ofType="com.zsgc.core.model.TaskTime"> 
+		<id column="time_id" jdbcType="INTEGER" property="timeId" /> <result column="task_id" 
+		jdbcType="INTEGER" property="taskId" /> <result column="task_date" jdbcType="DATE" 
+		property="taskDate" /> <result column="start_time" jdbcType="TIME" property="startTime" 
+		/> <result column="end_time" jdbcType="TIME" property="endTime" /> <result 
+		column="clock" jdbcType="INTEGER" property="clock" /> <result column="del_state" 
+		jdbcType="INTEGER" property="delState" /> </collection> </resultMap> -->
+
+	<sql id="Base_Column_List">
+		task_id, u_id, p_id, task_name, task_state, del_state,
+		task_time, task_type, create_time,
+		update_time, update_state,
+		associated_task,update_name,warehouse_type,start_time,end_time,clock,share_type
+	</sql>
+	<sql id="sql_condition">
+		<if test="condition != null">
+			<trim prefix="where" prefixOverrides="AND">
+				<if test="condition.taskId != null">
+					task_id = #{condition.taskId,jdbcType=INTEGER}
+				</if>
+				<if test="condition.uId != null">
+					AND u_id = #{condition.uId,jdbcType=INTEGER}
+				</if>
+				<if test="condition.pId != null">
+					AND p_id = #{condition.pId,jdbcType=INTEGER}
+				</if>
+				<if test="condition.taskName != null">
+					AND task_name = #{condition.taskName,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.taskState != null">
+					AND task_state = #{condition.taskState,jdbcType=INTEGER}
+				</if>
+				<if test="condition.delState != null">
+					AND del_state = #{condition.delState,jdbcType=INTEGER}
+				</if>
+				<if test="condition.taskTime != null">
+					AND task_time =
+					#{condition.taskTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="condition.createTime != null">
+					AND create_time =
+					#{condition.createTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="condition.updateTime != null">
+					AND update_time =
+					#{condition.updateTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="condition.taskType != null">
+					AND task_type = #{condition.taskType,jdbcType=INTEGER}
+				</if>
+				<if test="condition.updateState != null">
+					AND update_state = #{condition.updateState}
+				</if>
+				<if test="condition.associatedTask != null">
+					AND associated_task = #{condition.associatedTask}
+				</if>
+				<if
+					test="condition.updateName != null and condition.updateName != ''">
+					AND update_name = #{condition.updateName}
+				</if>
+				<if test="condition.warehouseType != null">
+					AND warehouse_type = #{condition.warehouseType}
+				</if>
+				<if test="condition.startTime != null">
+					AND start_time = #{condition.startTime}
+				</if>
+				<if test="condition.endTime != null">
+					AND end_time = #{condition.endTime}
+				</if>
+				<if test="condition.clock != null">
+					AND clock = #{condition.clock}
+				</if>
+				<if test="condition.shareType != null">
+					AND share_type = #{condition.shareType}
+				</if>
+			</trim>
+		</if>
+	</sql>
+	<select id="getById" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_task
+		where task_id = #{id,jdbcType=INTEGER} and del_state = 1
+	</select>
+	<select id="get" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_task
+		<trim prefix="where" prefixOverrides="AND">
+			<if test="condition.taskId != null">
+				task_id = #{condition.taskId,jdbcType=INTEGER}
+			</if>
+			<if test="condition.uId != null">
+				AND u_id = #{condition.uId,jdbcType=INTEGER}
+			</if>
+			<if test="condition.pId != null">
+				AND p_id = #{condition.pId,jdbcType=INTEGER}
+			</if>
+			<if test="condition.taskName != null">
+				AND task_name = #{condition.taskName,jdbcType=VARCHAR}
+			</if>
+			<if test="condition.taskState != null">
+				AND task_state = #{condition.taskState,jdbcType=INTEGER}
+			</if>
+			<if test="condition.delState != null">
+				AND del_state = #{condition.delState,jdbcType=INTEGER}
+			</if>
+			<if test="condition.taskTime != null">
+				AND task_time =
+				#{condition.taskTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="condition.createTime != null">
+				AND create_time =
+				#{condition.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="condition.updateTime != null">
+				AND update_time =
+				#{condition.updateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="condition.taskType != null">
+				AND task_type = #{condition.taskType,jdbcType=INTEGER}
+			</if>
+			<if test="condition.updateState != null">
+				AND update_state = #{condition.updateState}
+			</if>
+			<if test="condition.associatedTask != null">
+				AND associated_task = #{condition.associatedTask}
+			</if>
+			<if
+				test="condition.updateName != null and condition.updateName != ''">
+				AND update_name = #{condition.updateName}
+			</if>
+			<if test="condition.warehouseType != null">
+				AND warehouse_type = #{condition.warehouseType}
+			</if>
+			<if test="condition.startTime != null">
+				AND start_time = #{condition.startTime}
+			</if>
+			<if test="condition.endTime != null">
+				AND end_time = #{condition.endTime}
+			</if>
+			<if test="condition.clock != null">
+				AND clock = #{condition.clock}
+			</if>
+			<if test="condition.shareType != null">
+				AND share_type = #{condition.shareType}
+			</if>
+		</trim>
+	</select>
+	<select id="getList" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_task
+		<trim prefix="where" prefixOverrides="AND">
+			<if test="condition.taskId != null">
+				task_id = #{condition.taskId,jdbcType=INTEGER}
+			</if>
+			<if test="condition.uId != null">
+				AND u_id = #{condition.uId,jdbcType=INTEGER}
+			</if>
+			<if test="condition.pId != null">
+				AND p_id = #{condition.pId,jdbcType=INTEGER}
+			</if>
+			<if test="condition.taskName != null">
+				AND task_name = #{condition.taskName,jdbcType=VARCHAR}
+			</if>
+			<if test="condition.taskState != null">
+				AND task_state = #{condition.taskState,jdbcType=INTEGER}
+			</if>
+			<if test="condition.delState != null">
+				AND del_state = #{condition.delState,jdbcType=INTEGER}
+			</if>
+			<if test="condition.taskTime != null">
+				AND task_time =
+				#{condition.taskTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="condition.createTime != null">
+				AND create_time =
+				#{condition.createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="condition.updateTime != null">
+				AND update_time =
+				#{condition.updateTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="condition.taskType != null">
+				AND task_type = #{condition.taskType,jdbcType=INTEGER}
+			</if>
+			<if test="condition.updateState != null">
+				AND update_state = #{condition.updateState}
+			</if>
+			<if test="condition.associatedTask != null">
+				AND associated_task = #{condition.associatedTask}
+			</if>
+			<if
+				test="condition.updateName != null and condition.updateName != ''">
+				AND update_name = #{condition.updateName}
+			</if>
+			<if test="condition.warehouseType != null">
+				AND warehouse_type = #{condition.warehouseType}
+			</if>
+			<if test="condition.startTime != null">
+				AND start_time = #{condition.startTime}
+			</if>
+			<if test="condition.endTime != null">
+				AND end_time = #{condition.endTime}
+			</if>
+			<if test="condition.clock != null">
+				AND clock = #{condition.clock}
+			</if>
+			<if test="condition.shareType != null">
+				AND share_type = #{condition.shareType}
+			</if>
+		</trim>
+		order by create_time,task_type
+	</select>
+	<select id="getCount" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(0) from ot_task
+		where u_id=#{uId} AND
+		warehouse_Type=#{warehouseType}
+		AND task_type=#{taskType} AND
+		del_state=1
+		<trim>
+			<if test="taskState != null">
+				AND task_state=#{taskState}
+			</if>
+		</trim>
+		AND
+		DATE_FORMAT(`task_time`,'%Y-%M-%d')=DATE_FORMAT(#{date},'%Y-%M-%d');
+	</select>
+	<select id="getCountBegEnd" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(0) from ot_task
+		where u_id=#{uId} AND
+		warehouse_Type=#{warehouseType}
+		AND task_type=#{taskType} AND
+		del_state=1
+		<trim>
+			<if test="taskState != null">
+				AND task_state=#{taskState}
+			</if>
+		</trim>
+		AND <![CDATA[ DATE_FORMAT(`task_time`,'%Y-%M-%d')>=DATE_FORMAT(#{beginTime},'%Y-%M-%d')]]>
+		AND <![CDATA[ DATE_FORMAT(`task_time`,'%Y-%M-%d')<=DATE_FORMAT(#{endTime},'%Y-%M-%d')]]>;
+	</select>
+	<select id="getTodayTask" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_task
+		where u_id=${uId} and p_id=#{pId} and del_state=1 and
+		task_type=1
+		and
+		DATE_FORMAT(`create_time`,'%Y-%M-%d')=DATE_FORMAT(#{date},'%Y-%M-%d')
+	</select>
+	<select id="getTasksByPidTimes" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_task
+		where u_id=#{uId} and warehouse_type=#{warehouseType} and
+		task_type=1 and
+		del_state=1
+		and p_id=#{pId}
+		AND <![CDATA[ DATE_FORMAT(`task_time`,'%Y-%M-%d')>=DATE_FORMAT(#{beginDate},'%Y-%M-%d')]]>
+		AND <![CDATA[ DATE_FORMAT(`task_time`,'%Y-%M-%d')<=DATE_FORMAT(#{endDate},'%Y-%M-%d')]]>;
+	</select>
+
+	<insert id="insert" parameterType="com.zsgc.core.model.Task">
+		insert into ot_task
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="entity.taskId != null">
+				task_id,
+			</if>
+			<if test="entity.uId != null">
+				u_id,
+			</if>
+			<if test="entity.pId != null">
+				p_id,
+			</if>
+			<if test="entity.taskName != null and entity.taskName != ''">
+				task_name,
+			</if>
+			<if test="entity.taskState != null">
+				task_state,
+			</if>
+			<if test="entity.delState != null">
+				del_state,
+			</if>
+			<if test="entity.taskTime != null">
+				task_time,
+			</if>
+			<if test="entity.createTime != null">
+				create_time,
+			</if>
+			<if test="entity.updateTime != null">
+				update_time,
+			</if>
+			<if test="entity.taskType != null">
+				task_type,
+			</if>
+			<if test="entity.updateState != null">
+				update_state,
+			</if>
+			<if test="entity.associatedTask != null">
+				associated_task,
+			</if>
+			<if test="entity.updateName != null and entity.updateName != ''">
+				update_name,
+			</if>
+			<if test="entity.warehouseType != null">
+				warehouse_type,
+			</if>
+			<if test="entity.startTime != null">
+				start_time,
+			</if>
+			<if test="entity.endTime != null">
+				end_time,
+			</if>
+			<if test="entity.clock != null">
+				clock,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="entity.taskId != null">
+				#{entity.taskId,jdbcType=INTEGER},
+			</if>
+			<if test="entity.uId != null">
+				#{entity.uId,jdbcType=INTEGER},
+			</if>
+			<if test="entity.pId != null">
+				#{entity.pId,jdbcType=INTEGER},
+			</if>
+			<if test="entity.taskName != null">
+				#{entity.taskName,jdbcType=VARCHAR},
+			</if>
+			<if test="entity.taskState != null">
+				#{entity.taskState,jdbcType=INTEGER},
+			</if>
+			<if test="entity.delState != null">
+				#{entity.delState,jdbcType=INTEGER},
+			</if>
+			<if test="entity.taskTime != null">
+				#{entity.taskTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="entity.createTime != null">
+				#{entity.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="entity.updateTime != null">
+				#{entity.updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="entity.taskType != null">
+				#{entity.taskType,jdbcType=INTEGER},
+			</if>
+			<if test="entity.updateState != null">
+				#{entity.updateState},
+			</if>
+			<if test="entity.associatedTask != null">
+				#{entity.associatedTask},
+			</if>
+			<if test="entity.updateName != null and entity.updateName != ''">
+				#{entity.updateName},
+			</if>
+			<if test="entity.warehouseType != null">
+				#{entity.warehouseType},
+			</if>
+			<if test="entity.startTime != null">
+				#{entity.startTime},
+			</if>
+			<if test="entity.endTime != null">
+				#{entity.endTime},
+			</if>
+			<if test="entity.clock != null">
+				#{entity.clock},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="java.util.Map">
+		update ot_task
+		<set>
+			<if test="entity.taskId != null">
+				task_id = #{entity.taskId,jdbcType=INTEGER},
+			</if>
+			<if test="entity.uId != null">
+				u_id = #{entity.uId,jdbcType=INTEGER},
+			</if>
+			<if test="entity.pId != null">
+				p_id = #{entity.pId,jdbcType=INTEGER},
+			</if>
+			<if test="entity.taskName != null">
+				task_name = #{entity.taskName,jdbcType=VARCHAR},
+			</if>
+			<if test="entity.taskState != null">
+				task_state = #{entity.taskState,jdbcType=INTEGER},
+			</if>
+			<if test="entity.delState != null">
+				del_state = #{entity.delState,jdbcType=INTEGER},
+			</if>
+			<if test="entity.taskTime != null">
+				task_time = #{entity.taskTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="entity.createTime != null">
+				create_time = #{entity.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="entity.updateTime != null">
+				update_time = #{entity.updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="entity.taskType != null">
+				task_type = #{entity.taskType,jdbcType=INTEGER},
+			</if>
+			<if test="entity.updateState != null">
+				update_state = #{entity.updateState},
+			</if>
+			<if test="entity.associatedTask != null">
+				associated_task = #{entity.associatedTask},
+			</if>
+			<if test="entity.updateName != null and entity.updateName != ''">
+				update_name = #{entity.updateName},
+			</if>
+			<if test="entity.warehouseType != null">
+				warehouse_type = #{entity.warehouseType},
+			</if>
+			<if test="entity.startTime != null">
+				start_time = #{entity.startTime},
+			</if>
+			<if test="entity.endTime != null">
+				end_time = #{entity.endTime},
+			</if>
+			<if test="entity.clock != null">
+				clock = #{entity.clock},
+			</if>
+			<if test="entity.shareType != null">
+				share_type = #{entity.shareType},
+			</if>
+		</set>
+		where task_id = #{id}
+	</update>
+	<update id="updateTaskByPid" parameterType="java.util.Map">
+		update ot_task
+		set share_type = #{entity.shareType}
+		where p_id = #{entity.pId} and del_state=#{entity.delState}
+	</update>
+
+
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_task
+		where task_id = #{taskId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from ot_task
+		where task_id =
+		#{taskId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert1" parameterType="com.zsgc.core.model.Task">
+		insert into ot_task (task_id,
+		u_id, p_id,
+		task_name, task_state, del_state,
+		task_time, task_type,
+		create_time,
+		update_time, update_state, associated_task
+		)
+		values
+		(#{entity.taskId,jdbcType=INTEGER},
+		#{entity.uId,jdbcType=INTEGER},
+		#{entity.pId,jdbcType=INTEGER},
+		#{entity.taskName,jdbcType=VARCHAR},
+		#{entity.taskState,jdbcType=INTEGER},
+		#{entity.delState,jdbcType=INTEGER},
+		#{entity.taskTime,jdbcType=TIMESTAMP},
+		#{entity.createTime,jdbcType=TIMESTAMP},
+		#{entity.updateTime,jdbcType=TIMESTAMP},
+		#{entity.taskType,jdbcType=TIMESTAMP},
+		#{entity.updateState,jdbcType=INTEGER},
+		#{entity.associatedTask,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.zsgc.core.model.Task">
+		insert into ot_task
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="taskId != null">
+				task_id,
+			</if>
+			<if test="uId != null">
+				u_id,
+			</if>
+			<if test="pId != null">
+				p_id,
+			</if>
+			<if test="taskName != null">
+				task_name,
+			</if>
+			<if test="taskState != null">
+				task_state,
+			</if>
+			<if test="delState != null">
+				del_state,
+			</if>
+			<if test="taskTime != null">
+				task_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="taskType != null">
+				task_type,
+			</if>
+			<if test="updateState != null">
+				update_state,
+			</if>
+			<if test="associatedTask != null">
+				associated_task,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="taskId != null">
+				#{taskId,jdbcType=INTEGER},
+			</if>
+			<if test="uId != null">
+				#{uId,jdbcType=INTEGER},
+			</if>
+			<if test="pId != null">
+				#{pId,jdbcType=INTEGER},
+			</if>
+			<if test="taskName != null">
+				#{taskName,jdbcType=VARCHAR},
+			</if>
+			<if test="taskState != null">
+				#{taskState,jdbcType=INTEGER},
+			</if>
+			<if test="delState != null">
+				#{delState,jdbcType=INTEGER},
+			</if>
+			<if test="taskTime != null">
+				#{taskTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="taskType != null">
+				#{task_type,jdbcType=INTEGER},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="entity.taskType != null">
+				#{taskType,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.zsgc.core.model.Task">
+		update ot_task
+		<set>
+			<if test="uId != null">
+				u_id = #{uId,jdbcType=INTEGER},
+			</if>
+			<if test="pId != null">
+				p_id = #{pId,jdbcType=INTEGER},
+			</if>
+			<if test="taskName != null">
+				task_name = #{taskName,jdbcType=VARCHAR},
+			</if>
+			<if test="taskState != null">
+				task_state = #{taskState,jdbcType=INTEGER},
+			</if>
+			<if test="delState != null">
+				del_state = #{delState,jdbcType=INTEGER},
+			</if>
+			<if test="taskTime != null">
+				task_time = #{taskTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="taskType != null">
+				task_type = #{taskType,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateState != null">
+				update_state = #{updateState,jdbcType=INTEGER},
+			</if>
+			<if test="associatedTask != null">
+				associated_task = #{associatedTask,jdbcType=INTEGER},
+			</if>
+		</set>
+		where task_id = #{taskId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.zsgc.core.model.Task">
+		update ot_task
+		set u_id = #{uId,jdbcType=INTEGER},
+		p_id =
+		#{pId,jdbcType=INTEGER},
+		task_name = #{taskName,jdbcType=VARCHAR},
+		task_state = #{taskState,jdbcType=INTEGER},
+		del_state =
+		#{delState,jdbcType=INTEGER},
+		task_time =
+		#{taskTime,jdbcType=TIMESTAMP},
+		task_type =
+		#{taskType,jdbcType=INTEGER},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		update_time =
+		#{updateTime,jdbcType=TIMESTAMP},
+		update_state =
+		#{updateState,jdbcType=INTEGER},
+		associated_task =
+		#{associatedTask,jdbcType=INTEGER}
+		where task_id =
+		#{taskId,jdbcType=INTEGER}
+	</update>
+</mapper>

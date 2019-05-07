@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ucenterMemberTempDAO">
+	<resultMap id="Base"
+		type="com.zsgc.core.model.UcenterMember">
+		<result property="id" column="id" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="tradingPassword" column="trading_password" />
+		<result property="isAuthenticated" column="is_authenticated" />
+		<result property="isCheck" column="is_check" />
+		<result property="checkType" column="check_type" />
+		<result property="organize" column="organize" />
+		<result property="company" column="company" />
+		<result property="zone" column="zone" />
+		<result property="isBindBankCard" column="is_bind_bank_card" />
+		<result property="name" column="name" />
+		<result property="avatarPath" column="avatar_path" />
+		<result property="email" column="email" />
+		<result property="mobile" column="mobile" />
+		<result property="createdAt" column="created_at" />
+		<result property="regIp" column="reg_ip" />
+		<result property="lastLoginTime" column="last_login_time" />
+		<result property="lastLoginIp" column="last_login_ip" />
+		<result property="updatedAt" column="updated_at" />
+		<result property="status" column="status" />
+		<result property="registerFrom" column="register_from" />
+		<result property="friendIncomeStatus"
+			column="friend_income_status" />
+		<result property="sex" column="sex" />
+		<result property="birthday" column="birthday" />
+		<result property="qq" column="qq" />
+		<result property="signature" column="signature" />
+		<result property="score" column="score" />
+		<result property="experience" column="experience" />
+		<result property="continuLogin" column="continu_login" />
+		<result property="login" column="login" />
+		<result property="type" column="type" />
+		<result property="manager" column="manager" />
+		<result property="salesmanager" column="salesmanager" />
+		<result property="registerId" column="register_id" />
+		<result property="sid" column="sid" />
+		<result property="material" column="material" />
+		<result property="typeid" column="typeid" />
+		<result property="lx" column="lx" />
+		<result property="referrerId" column="referrer_id" />
+		<result property="referrerType" column="referrer_type" />
+		<result property="referrerUrl" column="referrer_url" />
+		<result property="packageName" column="package_name" />
+		<result property="queryStr" column="query_str" />
+		<result property="area" column="area" />
+		<result property="invitationCode" column="invitation_code" />
+		<result property="firstInvestAt" column="first_invest_at" />
+		<result property="errLoginTimes" column="err_login_times" />
+	</resultMap>
+
+	<sql id="sql_column_list">
+		id
+		,username
+		,password
+		,trading_password
+		,is_authenticated
+		,is_check
+		,check_type
+		,company
+		,organize
+		,zone
+		,is_bind_bank_card
+		,name
+		,avatar_path
+		,email
+		,mobile
+		,created_at
+		,reg_ip
+		,last_login_time
+		,last_login_ip
+		,updated_at
+		,status
+		,register_from
+		,friend_income_status
+		,sex
+		,birthday
+		,qq
+		,signature
+		,score
+		,experience
+		,continuLogin
+		,login
+		,type
+		,manager
+		,salesmanager
+		,register_id
+		,sid
+		,material
+		,typeid
+		,lx
+		,referrer_id
+		,referrer_type
+		,referrer_url
+		,package_name
+		,query_str
+		,area
+		,invitation_code
+		,first_invest_at
+		,err_login_times
+	</sql>
+	<update id="updateProOrTask" parameterType="java.util.Map">
+		update `ot_ucenter_member`
+		<trim prefix="set">
+			<if test="ucenterMember.publicPro != null">
+				publish_pro=#{ucenterMember.publishPro}
+			</if>
+			<if test="ucenterMember.publicTask != null">
+                publish_task=#{ucenterMember.publishTask}
+            </if>
+		</trim>
+	</update>
+	<update id="updatePro" parameterType="java.util.Map">
+        update `ot_ucenter_member`
+        set score = score+10,
+        publish_pro=publish_pro+1,
+        experience = experience+5
+        where <![CDATA[publish_pro <= 10]]> and id = #{ucenterMember.id} and status=1;
+    </update>
+    <update id="updatetask" parameterType="java.util.Map">
+        update `ot_ucenter_member`
+        set publish_task=publish_task+1,
+        experience = experience+5
+        where <![CDATA[publish_pro <= 10]]> and id = #{ucenterMember.id} and status=1;
+    </update>
+</mapper>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moneyDAO">
+
+  <sql id="count_sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null">AND id = #{condition.id}</if>
+      <if test="condition.username != null and condition.username != ''">AND username = #{condition.username}</if>
+      <if test="condition.password != null and condition.password != ''">AND password = #{condition.password}</if>
+      <if test="condition.tradingPassword != null and condition.tradingPassword != ''">AND trading_password = #{condition.tradingPassword}</if>
+      <if test="condition.isAuthenticated != null">AND is_authenticated = #{condition.isAuthenticated}</if>
+      <if test="condition.isBindBankCard != null">AND is_bind_bank_card = #{condition.isBindBankCard}</if>
+      <if test="condition.name != null and condition.name != ''">AND name = #{condition.name}</if>
+      <if test="condition.avatarPath != null and condition.avatarPath != ''">AND avatar_path = #{condition.avatarPath}</if>
+      <if test="condition.email != null and condition.email != ''">AND email = #{condition.email}</if>
+      <if test="condition.mobile != null and condition.mobile != ''">AND mobile = #{condition.mobile}</if>
+      <if test="condition.createdAt != null">AND created_at = #{condition.createdAt}</if>
+      <if test="condition.regIp != null and condition.regIp != ''">AND reg_ip = #{condition.regIp}</if>
+      <if test="condition.lastLoginTime != null">AND last_login_time = #{condition.lastLoginTime}</if>
+      <if test="condition.lastLoginIp != null and condition.lastLoginIp != ''">AND last_login_ip = #{condition.lastLoginIp}</if>
+      <if test="condition.updatedAt != null">AND updated_at = #{condition.updatedAt}</if>
+      <if test="condition.status != null">AND status = #{condition.status}</if>
+      <if test="condition.registerFrom != null">AND register_from = #{condition.registerFrom}</if>
+      <if test="condition.friendIncomeStatus != null">AND friend_income_status = #{condition.friendIncomeStatus}</if>
+      <if test="condition.sex != null">AND sex = #{condition.sex}</if>
+      <if test="condition.birthday != null">AND birthday = #{condition.birthday}</if>
+      <if test="condition.qq != null and condition.qq != ''">AND qq = #{condition.qq}</if>
+      <if test="condition.score != null">AND score = #{condition.score}</if>
+      <if test="condition.login != null">AND login = #{condition.login}</if>
+      <if test="condition.type != null">AND type = #{condition.type}</if>
+      <if test="condition.manager != null">AND manager = #{condition.manager}</if>
+      <if test="condition.salesmanager != null">AND salesmanager = #{condition.salesmanager}</if>
+      <if test="condition.registerId != null and condition.registerId != ''">AND register_id = #{condition.registerId}</if>
+      <if test="condition.sid != null and condition.sid != ''">AND sid = #{condition.sid}</if>
+      <if test="condition.material != null and condition.material != ''">AND material = #{condition.material}</if>
+      <if test="condition.typeid != null">AND typeid = #{condition.typeid}</if>
+      <if test="condition.lx != null">AND lx = #{condition.lx}</if>
+      <if test="condition.referrerId != null">AND referrer_id = #{condition.referrerId}</if>
+      <if test="condition.referrerType != null">AND referrer_type = #{condition.referrerType}</if>
+      <if test="condition.referrerUrl != null and condition.referrerUrl != ''">AND referrer_url = #{condition.referrerUrl}</if>
+      <if test="condition.packageName != null and condition.packageName != ''">AND package_name = #{condition.packageName}</if>
+      <if test="condition.queryStr != null and condition.queryStr != ''">AND query_str = #{condition.queryStr}</if>
+      <if test="condition.area != null and condition.area != ''">AND area = #{condition.area}</if>
+      <if test="condition.invitationCode != null and condition.invitationCode != ''">AND invitation_code = #{condition.invitationCode}</if>
+      <if test="condition.firstInvestAt != null">AND first_invest_at = #{condition.firstInvestAt}</if>
+      <if test="condition.errLoginTimes != null">AND err_login_times = #{condition.errLoginTimes}</if>
+      <if test="!condition.expressionChainList.empty">
+        AND
+        <foreach collection="condition.expressionChainList" item="expressionChain" separator="OR">
+          <if test="!expressionChain.expressionList.empty">
+            <foreach collection="expressionChain.expressionList" item="expression" separator="AND">
+              <choose>
+                <when test="expression.type == 0">
+                  ${expression.column} ${expression.operator}
+                </when>
+                <when test="expression.type == 1">
+                  ${expression.column} ${expression.operator} #{expression.value}
+                </when>
+                <when test="expression.type == 2">
+                  ${expression.column} ${expression.operator} #{expression.value} AND #{expression.value1}
+                </when>
+                <when test="expression.type == 3">
+                  ${expression.column} ${expression.operator}
+                  <foreach collection="expression.values" item="value" open="(" separator="," close=")">
+                    #{value}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </if>
+        </foreach>
+      </if>
+    </if>
+  </sql>
+
+  <select id="sumInvestTotal" parameterType="java.util.Map" resultType="java.math.BigDecimal">
+    SELECT SUM(totle_invest_money) FROM ot_money m,ot_ucenter_member u WHERE m.uid=u.id <include refid="count_sql_condition" />;
+  </select>
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="taskDescriptionDAO">
+	<select id="selByTaskId" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		SELECT
+		`task_description`
+		FROM
+		`ot_task_description`
+		WHERE `task_id` = #{id} and del_state = 1
+		LIMIT 1;
+	</select>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="memberSpreadDAO">
+  <update id="addViewNumber" parameterType="java.lang.Integer">
+    UPDATE ot_member_spread
+    SET view_number = view_number +1
+    WHERE id = #{id}
+  </update>
+  <update id="addUserNumber" parameterType="java.lang.Integer">
+    UPDATE ot_member_spread
+    SET user_number = user_number +1
+    WHERE id = #{id}
+  </update>
+  <update id="addIpNumber" parameterType="java.lang.Integer">
+    UPDATE ot_member_spread
+    SET ip_number = (SELECT COUNT(DISTINCT ip_address) FROM ot_spread_view_log WHERE uid = #{id})
+    WHERE id = #{id}
+  </update>
+</mapper>

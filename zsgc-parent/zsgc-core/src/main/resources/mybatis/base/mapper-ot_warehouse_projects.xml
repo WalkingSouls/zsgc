@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="warehouseProjectsDAO">
+	 <resultMap id="BaseResultMap" type="com.zsgc.core.model.WarehouseProjects">
+    <id column="p_id" jdbcType="INTEGER" property="pId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="intentional_city" jdbcType="VARCHAR" property="intentionalCity" />
+    <result column="investment_amount" jdbcType="VARCHAR" property="investmentAmount" />
+    <result column="warehouse_type" jdbcType="INTEGER" property="warehouseType" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="industry" jdbcType="VARCHAR" property="industry" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="del_state" jdbcType="INTEGER" property="delState" />
+    <result column="create_p" jdbcType="TIMESTAMP" property="createP" />
+    <result column="update_p" jdbcType="TIMESTAMP" property="updateP" />
+    <result column="u_id" jdbcType="INTEGER" property="uId" />
+    <result column="del_cause_num" jdbcType="TINYINT" property="delCauseNum" />
+    <result column="del_cause" jdbcType="VARCHAR" property="delCause" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="top" jdbcType="INTEGER" property="top" />
+    <result column="top_time" jdbcType="TIMESTAMP" property="topTime" />
+    <result column="collection_num" jdbcType="INTEGER" property="collectionNum" />
+    <result column="follow_num" jdbcType="INTEGER" property="followNum" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="shared_book" jdbcType="TINYINT" property="sharedBook" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    p_id, project_name, intentional_city, investment_amount, warehouse_type, city, industry, 
+    state, del_state, create_p, update_p, u_id, del_cause_num, del_cause, score, top, 
+    top_time, collection_num, follow_num, comment_num, shared_book
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_warehouse_projects
+    where p_id = #{pId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ot_warehouse_projects
+    where p_id = #{pId,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insertSelective" parameterType="com.zsgc.core.model.WarehouseProjects">
+    insert into ot_warehouse_projects
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pId != null">
+        p_id,
+      </if>
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="intentionalCity != null">
+        intentional_city,
+      </if>
+      <if test="investmentAmount != null">
+        investment_amount,
+      </if>
+      <if test="warehouseType != null">
+        warehouse_type,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="industry != null">
+        industry,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="delState != null">
+        del_state,
+      </if>
+      <if test="createP != null">
+        create_p,
+      </if>
+      <if test="updateP != null">
+        update_p,
+      </if>
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="delCauseNum != null">
+        del_cause_num,
+      </if>
+      <if test="delCause != null">
+        del_cause,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="top != null">
+        top,
+      </if>
+      <if test="topTime != null">
+        top_time,
+      </if>
+      <if test="collectionNum != null">
+        collection_num,
+      </if>
+      <if test="followNum != null">
+        follow_num,
+      </if>
+      <if test="commentNum != null">
+        comment_num,
+      </if>
+      <if test="sharedBook != null">
+        shared_book,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pId != null">
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="intentionalCity != null">
+        #{intentionalCity,jdbcType=VARCHAR},
+      </if>
+      <if test="investmentAmount != null">
+        #{investmentAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseType != null">
+        #{warehouseType,jdbcType=INTEGER},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="delState != null">
+        #{delState,jdbcType=INTEGER},
+      </if>
+      <if test="createP != null">
+        #{createP,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateP != null">
+        #{updateP,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="delCauseNum != null">
+        #{delCauseNum,jdbcType=TINYINT},
+      </if>
+      <if test="delCause != null">
+        #{delCause,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="top != null">
+        #{top,jdbcType=INTEGER},
+      </if>
+      <if test="topTime != null">
+        #{topTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collectionNum != null">
+        #{collectionNum,jdbcType=INTEGER},
+      </if>
+      <if test="followNum != null">
+        #{followNum,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null">
+        #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="sharedBook != null">
+        #{sharedBook,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsgc.core.model.WarehouseProjects">
+    update ot_warehouse_projects
+    <set>
+      <if test="projectName != null">
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="intentionalCity != null">
+        intentional_city = #{intentionalCity,jdbcType=VARCHAR},
+      </if>
+      <if test="investmentAmount != null">
+        investment_amount = #{investmentAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseType != null">
+        warehouse_type = #{warehouseType,jdbcType=INTEGER},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="delState != null">
+        del_state = #{delState,jdbcType=INTEGER},
+      </if>
+      <if test="createP != null">
+        create_p = #{createP,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateP != null">
+        update_p = #{updateP,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uId != null">
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="delCauseNum != null">
+        del_cause_num = #{delCauseNum,jdbcType=TINYINT},
+      </if>
+      <if test="delCause != null">
+        del_cause = #{delCause,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="top != null">
+        top = #{top,jdbcType=INTEGER},
+      </if>
+      <if test="topTime != null">
+        top_time = #{topTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collectionNum != null">
+        collection_num = #{collectionNum,jdbcType=INTEGER},
+      </if>
+      <if test="followNum != null">
+        follow_num = #{followNum,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null">
+        comment_num = #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="sharedBook != null">
+        shared_book = #{sharedBook,jdbcType=TINYINT},
+      </if>
+    </set>
+    where p_id = #{pId,jdbcType=INTEGER}
+  </update>
+	<resultMap type="com.zsgc.core.model.WarehouseProjects"
+		id="projectDescriptionColl" extends="BaseResultMap">
+		<collection property="list" javaType="List"
+			ofType="com.zsgc.core.model.ProjectDescription">
+			<id column="des_id" jdbcType="INTEGER" property="desId" />
+			<result column="des_words" jdbcType="VARCHAR"
+				property="desWords" />
+			<result column="p_id" jdbcType="INTEGER" property="pId" />
+			<result column="des_state" jdbcType="INTEGER"
+				property="desState" />
+		</collection>
+	</resultMap>
+
+	<resultMap type="com.zsgc.core.model.WarehouseProjects"
+		id="customerProfileColl" extends="BaseResultMap">
+		<collection property="listCP" javaType="List"
+			ofType="com.zsgc.core.model.CustomerProfile">
+			<id column="customer_id" jdbcType="INTEGER" property="customerId" />
+			<result column="p_id" jdbcType="INTEGER" property="pId" />
+			<result column="customer_name" jdbcType="VARCHAR"
+				property="customerName" />
+			<result column="customer_job" jdbcType="VARCHAR"
+				property="customerJob" />
+			<result column="telephone" jdbcType="VARCHAR"
+				property="telephone" />
+			<result column="remark" jdbcType="VARCHAR" property="remark" />
+			<result column="del_state" jdbcType="INTEGER"
+				property="delState" />
+			<result column="create_date" jdbcType="TIMESTAMP"
+				property="createDate" />
+			<result column="update_date" jdbcType="TIMESTAMP"
+				property="updateDate" />
+			<result column="other" jdbcType="VARCHAR" property="other" />
+			<result column="parent_id" jdbcType="INTEGER"
+				property="parentId" />
+		</collection>
+	</resultMap>
+
+	<select id="get" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_warehouse_projects
+		where project_name =
+		#{condition.projectName} and del_state = 1
+	</select>
+	<select id="getById" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_warehouse_projects
+		where p_id = #{id} and del_state = 1
+	</select>
+	<select id="getAllpId" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select p_id
+		from ot_warehouse_projects
+		where del_state =
+		#{delState} and warehouse_type = #{warehouseType} order by update_p
+		desc
+	</select>
+
+	<select id="getHotpIds" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select p_id
+		from ot_warehouse_projects
+		where del_state =
+		#{delState} and warehouse_type = #{warehouseType} order by follow_num
+		desc,update_p desc
+	</select>
+
+	<select id="getProByIndustry" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select p_id
+		from ot_warehouse_projects
+		where del_state =
+		#{delState} and warehouse_type = #{warehouseType} and
+		industry=#{industry} order by follow_num desc,update_p desc
+	</select>
+	<select id="getProsByuId" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_warehouse_projects
+		where u_id =
+		#{uId} and del_state =
+		#{delState} and warehouse_type = #{warehouseType} order by update_p
+		desc,follow_num desc
+	</select>
+	<!-- <select id="getList" parameterType="java.util.Map" resultType="java.lang.Integer"> 
+		select </select> -->
+	<select id="getSuccessCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(0) from ot_warehouse_projects
+		where u_id=#{uId} and warehouse_type=#{warehouseType} and state in (1,3)
+		and DATE_FORMAT(`create_p`,'%Y-%M-%d')=DATE_FORMAT(#{date},'%Y-%M-%d')
+		and del_state=#{delState};
+	</select>
+	<select id="getSuccessCountBegEnd" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(0) from ot_warehouse_projects
+		where u_id=#{uId} and warehouse_type=#{warehouseType} and state in (1,3)
+		AND <![CDATA[ DATE_FORMAT(`create_p`,'%Y-%M-%d')>=DATE_FORMAT(#{beginTime},'%Y-%M-%d')]]>
+		AND <![CDATA[ DATE_FORMAT(`create_p`,'%Y-%M-%d')<=DATE_FORMAT(#{endTime},'%Y-%M-%d')]]>;
+	</select>
+	<insert id="insert" parameterType="java.util.Map">
+		insert into
+		ot_warehouse_projects (p_id, project_name, intentional_city,
+		investment_amount, warehouse_type, city,
+		industry, state, del_state,
+		create_p, update_p, u_id, score)
+		values
+		(#{entity.pId,jdbcType=INTEGER},
+		#{entity.projectName,jdbcType=VARCHAR},
+		#{entity.intentionalCity,jdbcType=VARCHAR},
+		#{entity.investmentAmount,jdbcType=VARCHAR},
+		#{entity.warehouseType,jdbcType=INTEGER},
+		#{entity.city,jdbcType=VARCHAR},
+		#{entity.industry,jdbcType=VARCHAR},
+		#{entity.state,jdbcType=INTEGER},
+		#{entity.delState,jdbcType=INTEGER},
+		#{entity.createP,jdbcType=TIMESTAMP},
+		#{entity.updateP,jdbcType=TIMESTAMP},
+		#{entity.uId,jdbcType=INTEGER},
+		#{entity.score})
+	</insert>
+
+	<update id="updateById" parameterType="java.util.Map">
+		update
+		ot_warehouse_projects
+		set project_name =
+		#{entity.projectName,jdbcType=VARCHAR},
+		intentional_city =
+		#{entity.intentionalCity,jdbcType=VARCHAR},
+		investment_amount =
+		#{entity.investmentAmount,jdbcType=VARCHAR},
+		warehouse_type =
+		#{entity.warehouseType,jdbcType=INTEGER},
+		city =
+		#{entity.city,jdbcType=VARCHAR},
+		industry =
+		#{entity.industry,jdbcType=VARCHAR},
+		state =
+		#{entity.state,jdbcType=INTEGER},
+		del_state =
+		#{entity.delState,jdbcType=INTEGER},
+		create_p =
+		#{entity.createP,jdbcType=TIMESTAMP},
+		update_p =
+		#{entity.updateP,jdbcType=TIMESTAMP},
+		u_id =
+		#{entity.uId,jdbcType=INTEGER},
+		del_cause =
+		#{entity.delCause},
+		del_cause_num=
+		#{entity.delCauseNum},
+		score =
+		#{entity.score,jdbcType=DECIMAL}
+		where p_id =
+		#{entity.pId,jdbcType=INTEGER} and del_state = 1
+	</update>
+	<update id="updateFolNum" parameterType="java.util.Map">
+		update
+		ot_warehouse_projects
+		set follow_num =
+		follow_num+#{folNumChange,jdbcType=INTEGER}
+		where p_id =
+		#{pId,jdbcType=INTEGER} and del_state = 1
+	</update>
+
+	<select id="sel_count"
+		parameterType="com.zsgc.core.model.WarehouseProjects"
+		resultType="java.lang.Integer">
+		SELECT COUNT(0) FROM `ot_warehouse_projects` WHERE u_id =
+		#{uId}
+		<if test="warehouseType != null">
+			AND warehouse_type = #{warehouseType,jdbcType=INTEGER}
+		</if>
+		<if test="delState != null">
+			AND del_state = #{delState,jdbcType=INTEGER}
+		</if>
+		<if test="delCauseNum != null">
+			AND del_cause_num = #{delCauseNum,jdbcType=TINYINT}
+		</if>
+		<if test="industry != null">
+			AND industry = #{industry}
+		</if>
+		<if test="state != null">
+			AND state = #{state}
+		</if>
+	</select>
+
+	<select id="selByBean" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_warehouse_projects
+		where u_id = #{bean.uId}
+		<if test="bean.delState != null">
+			AND del_state = #{bean.delState,jdbcType=INTEGER}
+		</if>
+		<if test="bean.delCauseNum != null">
+			AND del_cause_num = #{bean.delCauseNum,jdbcType=TINYINT}
+		</if>
+		order by update_p desc
+		LIMIT #{count},#{PageSize};
+	</select>
+
+	<select id="selByPids" parameterType="java.util.List"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_warehouse_projects
+		where p_id in
+		<foreach collection="list" index="index" item="projects"
+			open="(" separator="," close=")">
+			#{projects.pId}
+		</foreach>
+	</select>
+
+	<select id="selByTopAll"
+		parameterType="com.zsgc.core.model.WarehouseProjects"
+		resultType="java.lang.Integer">
+		select
+		COUNT(0)
+		from ot_warehouse_projects
+		where u_id = #{uId}
+		AND
+		`warehouse_type` = #{warehouseType} AND
+		del_state = #{delState} AND
+		top
+		= 1
+		<if test="industry!=null">
+			AND industry = #{industry}
+		</if>
+		<if test="state!=null">
+			AND state = #{state}
+		</if>
+		;
+	</select>
+
+	<select id="selByTop" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		SELECT
+		wp.p_id, wp.project_name, wp.intentional_city,
+		wp.investment_amount,
+		wp.warehouse_type, wp.city, wp.industry,
+		wp.state, wp.del_state, wp.create_p, wp.update_p, wp.u_id,
+		wp.del_cause,
+		ue.score, wp.top, wp.top_time, wp.collection_num,
+		wp.follow_num, wp.comment_num,
+		wp.shared_book
+		FROM ot_warehouse_projects AS wp
+		LEFT JOIN
+		`ot_user_extend` AS
+		ue
+		ON ue.now_p_id = wp.p_id
+		where wp.u_id =
+		#{bean.uId} AND
+		wp.warehouse_type = #{bean.warehouseType}
+		AND
+		wp.del_state = #{bean.delState} AND wp.top = #{bean.top}
+		<if test="bean.industry!=null">
+			AND wp.industry = #{bean.industry}
+		</if>
+		<if test="bean.state!=null">
+			AND wp.state = #{bean.state}
+		</if>
+		order by wp.top_time desc
+		LIMIT
+		#{count},#{PageSize};
+	</select>
+
+	<select id="selByOther" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		SELECT
+		wp.p_id, wp.project_name, wp.intentional_city,
+		wp.investment_amount,
+		wp.warehouse_type, wp.city, wp.industry,
+		wp.state, wp.del_state, wp.create_p, wp.update_p, wp.u_id,
+		wp.del_cause,
+		ue.score, wp.top, wp.top_time, wp.collection_num,
+		wp.follow_num, wp.comment_num,
+		wp.shared_book
+		FROM ot_warehouse_projects AS wp
+		LEFT JOIN
+		`ot_user_extend` AS
+		ue
+		ON ue.now_p_id = wp.p_id
+		where wp.u_id =
+		#{bean.uId} AND
+		wp.warehouse_type = #{bean.warehouseType}
+		AND
+		wp.del_state = #{bean.delState} AND wp.top = #{bean.top}
+		<if test="bean.industry!=null">
+			AND wp.industry = #{bean.industry}
+		</if>
+		<if test="bean.state!=null">
+			AND wp.state = #{bean.state}
+		</if>
+		order by wp.update_p desc
+		LIMIT
+		#{count},#{PageSize};
+	</select>
+</mapper>

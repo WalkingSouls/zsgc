@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="memberSpreadDAO">
+  <resultMap id="memberSpread" type="com.zsgc.core.model.MemberSpread">
+    <result property="id" column="id" />
+    <result property="userNumber" column="user_number" />
+    <result property="viewNumber" column="view_number" />
+    <result property="ipNumber" column="ip_number" />
+    <result property="totleCommission" column="totle_commission" />
+    <result property="usefullCommission" column="usefull_commission" />
+    <result property="createdAt" column="created_at" />
+    <result property="updatedAt" column="updated_at" />
+  </resultMap>
+
+  <sql id="sql_insert_column_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,id</if>
+      <if test="entity.userNumber != null">,user_number</if>
+      <if test="entity.viewNumber != null">,view_number</if>
+      <if test="entity.ipNumber != null">,ip_number</if>
+      <if test="entity.totleCommission != null">,totle_commission</if>
+      <if test="entity.usefullCommission != null">,usefull_commission</if>
+      <if test="entity.createdAt != null">,created_at</if>
+      <if test="entity.createdAt == null">,created_at</if>
+      <if test="entity.updatedAt != null">,updated_at</if>
+      <if test="entity.updatedAt == null">,updated_at</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_insert_property_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,#{entity.id}</if>
+      <if test="entity.userNumber != null">,#{entity.userNumber}</if>
+      <if test="entity.viewNumber != null">,#{entity.viewNumber}</if>
+      <if test="entity.ipNumber != null">,#{entity.ipNumber}</if>
+      <if test="entity.totleCommission != null">,#{entity.totleCommission}</if>
+      <if test="entity.usefullCommission != null">,#{entity.usefullCommission}</if>
+      <if test="entity.createdAt != null">,#{entity.createdAt}</if>
+      <if test="entity.createdAt == null">,NOW()</if>
+      <if test="entity.updatedAt != null">,#{entity.updatedAt}</if>
+      <if test="entity.updatedAt == null">,NOW()</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_column_list">
+    id
+    ,user_number
+    ,view_number
+    ,ip_number
+    ,totle_commission
+    ,usefull_commission
+    ,created_at
+    ,updated_at
+  </sql>
+
+  <sql id="sql_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="entity != null">
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('id')">
+            ,id = #{entity.id, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.id != null">,id = #{entity.id}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('userNumber')">
+            ,user_number = #{entity.userNumber, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.userNumber != null">,user_number = #{entity.userNumber}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('viewNumber')">
+            ,view_number = #{entity.viewNumber, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.viewNumber != null">,view_number = #{entity.viewNumber}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('ipNumber')">
+            ,ip_number = #{entity.ipNumber, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.ipNumber != null">,ip_number = #{entity.ipNumber}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('totleCommission')">
+            ,totle_commission = #{entity.totleCommission, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.totleCommission != null">,totle_commission = #{entity.totleCommission}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('usefullCommission')">
+            ,usefull_commission = #{entity.usefullCommission, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.usefullCommission != null">,usefull_commission = #{entity.usefullCommission}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('createdAt')">
+            ,created_at = #{entity.createdAt, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.createdAt != null">,created_at = #{entity.createdAt}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('updatedAt')">
+            ,updated_at = #{entity.updatedAt, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.updatedAt != null">,updated_at = #{entity.updatedAt}</if>
+            <if test="entity.updatedAt == null">,updated_at = NOW()</if>
+          </otherwise>
+        </choose>
+        <if test="!entity.incrementUpdateMap.isEmpty()">
+          ,
+          <foreach collection="entity.incrementUpdateMap" index="key" item="value" separator=",">
+            ${key} = ${key} + #{value}
+          </foreach>
+        </if>
+      </if>
+    </trim>
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null">AND id = #{condition.id}</if>
+      <if test="condition.userNumber != null">AND user_number = #{condition.userNumber}</if>
+      <if test="condition.viewNumber != null">AND view_number = #{condition.viewNumber}</if>
+      <if test="condition.ipNumber != null">AND ip_number = #{condition.ipNumber}</if>
+      <if test="condition.totleCommission != null">AND totle_commission = #{condition.totleCommission}</if>
+      <if test="condition.usefullCommission != null">AND usefull_commission = #{condition.usefullCommission}</if>
+      <if test="condition.createdAt != null">AND created_at = #{condition.createdAt}</if>
+      <if test="condition.updatedAt != null">AND updated_at = #{condition.updatedAt}</if>
+      <if test="!condition.expressionChainList.empty">
+        AND
+        <foreach collection="condition.expressionChainList" item="expressionChain" separator="OR">
+          <if test="!expressionChain.expressionList.empty">
+            <foreach collection="expressionChain.expressionList" item="expression" separator="AND">
+              <choose>
+                <when test="expression.type == 0">
+                  ${expression.column} ${expression.operator}
+                </when>
+                <when test="expression.type == 1">
+                  ${expression.column} ${expression.operator} #{expression.value}
+                </when>
+                <when test="expression.type == 2">
+                  ${expression.column} ${expression.operator} #{expression.value} AND #{expression.value1}
+                </when>
+                <when test="expression.type == 3">
+                  ${expression.column} ${expression.operator}
+                  <foreach collection="expression.values" item="value" open="(" separator="," close=")">
+                    #{value}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </if>
+        </foreach>
+      </if>
+    </if>
+  </sql>
+
+  <sql id="sql_pagination_start">
+  <![CDATA[
+  ]]>
+  </sql>
+
+  <sql id="sql_pagination_end">
+  <![CDATA[
+    LIMIT #{offset}, #{limit}
+  ]]>
+  </sql>
+
+  <insert id="insert" parameterType="java.util.Map">
+    <selectKey keyProperty="entity.id" resultType="java.lang.Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    INSERT INTO ot_member_spread (
+      <include refid="sql_insert_column_list" />
+    ) VALUES (
+      <include refid="sql_insert_property_list" />
+    )
+  </insert>
+
+  <select id="get" parameterType="java.util.Map" resultMap="memberSpread">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_member_spread
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="java.util.Map" resultMap="memberSpread">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_member_spread
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultMap="memberSpread">
+    <if test="offset != null">
+      <include refid="sql_pagination_start" />
+    </if>
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_member_spread
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end" />
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(${count_column}) AS count_ FROM ot_member_spread
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="aggregate" parameterType="java.util.Map" resultType="java.util.HashMap">
+    SELECT ${aggregate_sql} FROM ot_member_spread
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <update id="update" parameterType="java.util.Map">
+    UPDATE ot_member_spread
+    <include refid="sql_update_set" />
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </update>
+
+  <update id="updateById" parameterType="java.util.Map">
+    UPDATE ot_member_spread
+    <include refid="sql_update_set" />
+    WHERE id = #{id}
+  </update>
+
+  <delete id="remove" parameterType="java.util.Map">
+    DELETE FROM ot_member_spread
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </delete>
+
+  <delete id="removeById" parameterType="java.util.Map">
+    DELETE FROM ot_member_spread
+    WHERE id = #{id}
+  </delete>
+</mapper>

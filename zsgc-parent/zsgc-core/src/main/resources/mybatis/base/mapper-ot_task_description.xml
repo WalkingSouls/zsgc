@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="taskDescriptionDAO">
+	<resultMap id="BaseResultMap"
+		type="com.zsgc.core.model.TaskDescription">
+		<id column="des_id" jdbcType="INTEGER" property="desId" />
+		<result column="task_id" jdbcType="INTEGER" property="taskId" />
+		<result column="task_description" jdbcType="VARCHAR"
+			property="taskDescription" />
+		<result column="del_state" jdbcType="INTEGER"
+			property="delState" />
+	</resultMap>
+	<resultMap type="com.zsgc.core.model.TaskDescription"
+		id="desPicture" extends="BaseResultMap">
+		<collection property="dpList" javaType="List"
+			ofType="com.zsgc.core.model.DesPicture">
+			<id column="pic_id" jdbcType="INTEGER" property="picId" />
+			<result column="des_id" jdbcType="INTEGER" property="desId" />
+			<result column="pic_path" jdbcType="VARCHAR"
+				property="picPath" />
+			<result column="del_state" jdbcType="INTEGER"
+				property="delState" />
+		</collection>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		des_id, task_id, task_description, del_state
+	</sql>
+	<sql id="sql_condition">
+		<trim prefix="" prefixOverrides="AND">
+			<if test="condition != null">
+				<if test="condition.desId != null">
+					des_id = #{condition.desId,jdbcType=INTEGER}
+				</if>
+				<if test="condition.taskId != null">
+					AND task_id = #{condition.taskId,jdbcType=INTEGER}
+				</if>
+				<if
+					test="condition.taskDescription != null and entity.taskDescription != ''">
+					AND task_description = #{condition.taskDescription,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.delState != null">
+					AND del_state = #{condition.delState,jdbcType=INTEGER}
+				</if>
+			</if>
+		</trim>
+	</sql>
+
+	<select id="getById" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_task_description
+		where des_id = #{id,jdbcType=INTEGER} and
+		del_state=1
+	</select>
+	<select id="get" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from ot_task_description
+		<if test="condition != null">
+			<trim prefix="where" prefixOverrides="AND">
+				<if test="condition.desId != null">
+					des_id = #{condition.desId,jdbcType=INTEGER}
+				</if>
+				<if test="condition.taskId != null">
+					AND task_id = #{condition.taskId,jdbcType=INTEGER}
+				</if>
+				<if
+					test="condition.taskDescription != null and entity.taskDescription != ''">
+					AND task_description = #{condition.taskDescription,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.delState != null">
+					AND del_state = #{condition.delState,jdbcType=INTEGER}
+				</if>
+			</trim>
+		</if>
+	</select>
+	<select id="getList" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from ot_task_description
+		<if test="condition != null">
+			<trim prefix="where" prefixOverrides="AND">
+				<if test="condition.desId != null">
+					des_id = #{condition.desId,jdbcType=INTEGER}
+				</if>
+				<if test="condition.taskId != null">
+					AND task_id = #{condition.taskId,jdbcType=INTEGER}
+				</if>
+				<if
+					test="condition.taskDescription != null and entity.taskDescription != ''">
+					AND task_description = #{condition.taskDescription,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.delState != null">
+					AND del_state = #{condition.delState,jdbcType=INTEGER}
+				</if>
+			</trim>
+		</if>
+	</select>
+	<insert id="insert"
+		parameterType="com.zsgc.core.model.TaskDescription">
+		insert into ot_task_description
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="entity.desId != null">
+				des_id,
+			</if>
+			<if test="entity.taskId != null">
+				task_id,
+			</if>
+			<if
+				test="entity.taskDescription != null and entity.taskDescription != ''">
+				task_description,
+			</if>
+			<if test="entity.delState != null">
+				del_state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="entity.desId != null">
+				#{entity.desId,jdbcType=INTEGER},
+			</if>
+			<if test="entity.taskId != null">
+				#{entity.taskId,jdbcType=INTEGER},
+			</if>
+			<if
+				test="entity.taskDescription != null and entity.taskDescription != ''">
+				#{entity.taskDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="entity.delState != null">
+				#{entity.delState,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="java.util.Map">
+		update ot_task_description
+		<set>
+			<if test="entity.desId != null">
+				des_id = #{entity.desId,jdbcType=INTEGER},
+			</if>
+			<if test="entity.taskId != null">
+				task_id = #{entity.taskId,jdbcType=INTEGER},
+			</if>
+			<if
+				test="entity.taskDescription != null and entity.taskDescription != ''">
+				task_description = #{entity.taskDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="entity.delState != null">
+				del_state = #{entity.delState,jdbcType=INTEGER},
+			</if>
+		</set>
+		where des_id = #{id}
+	</update>
+	<delete id="remove" parameterType="java.util.Map">
+		delete from ot_task_description
+		where 
+        <include refid="sql_condition"/>
+	</delete>
+
+
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_task_description
+		where des_id = #{desId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from ot_task_description
+		where des_id =
+		#{desId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert1"
+		parameterType="com.zsgc.core.model.TaskDescription">
+		insert into ot_task_description (des_id, task_id,
+		task_description,
+		del_state)
+		values (#{desId,jdbcType=INTEGER},
+		#{taskId,jdbcType=INTEGER},
+		#{taskDescription,jdbcType=VARCHAR},
+		#{delState,jdbcType=INTEGER})
+	</insert>
+
+	<insert id="insertSelective"
+		parameterType="com.zsgc.core.model.TaskDescription">
+		insert into ot_task_description
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="desId != null">
+				des_id,
+			</if>
+			<if test="taskId != null">
+				task_id,
+			</if>
+			<if test="taskDescription != null">
+				task_description,
+			</if>
+			<if test="delState != null">
+				del_state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="desId != null">
+				#{desId,jdbcType=INTEGER},
+			</if>
+			<if test="taskId != null">
+				#{taskId,jdbcType=INTEGER},
+			</if>
+			<if test="taskDescription != null">
+				#{taskDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="delState != null">
+				#{delState,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.zsgc.core.model.TaskDescription">
+		update ot_task_description
+		<set>
+			<if test="taskId != null">
+				task_id = #{taskId,jdbcType=INTEGER},
+			</if>
+			<if test="taskDescription != null">
+				task_description = #{taskDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="delState != null">
+				del_state = #{delState,jdbcType=INTEGER},
+			</if>
+		</set>
+		where des_id = #{desId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.zsgc.core.model.TaskDescription">
+		update ot_task_description
+		set task_id =
+		#{taskId,jdbcType=INTEGER},
+		task_description =
+		#{taskDescription,jdbcType=VARCHAR},
+		del_state =
+		#{delState,jdbcType=INTEGER}
+		where des_id = #{desId,jdbcType=INTEGER}
+	</update>
+</mapper>

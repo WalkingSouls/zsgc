@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="custUserMsgDAO">
+	<resultMap id="BaseResultMap" type="com.zsgc.core.model.CustUserMsg">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="user_id" jdbcType="INTEGER" property="userId" />
+		<result column="msg_type" jdbcType="TINYINT" property="msgType" />
+		<result column="msg_title" jdbcType="VARCHAR" property="msgTitle" />
+		<result column="msg_content" jdbcType="VARCHAR" property="msgContent" />
+		<result column="msg_client" jdbcType="VARCHAR" property="msgClient" />
+		<result column="msg_status" jdbcType="TINYINT" property="msgStatus" />
+		<result column="msg_read_at" jdbcType="TIMESTAMP" property="msgReadAt" />
+		<result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+		<result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+		<result column="msg_push_status" jdbcType="TINYINT" property="msgPushStatus" />
+		<result column="msg_push_start_at" jdbcType="TIMESTAMP"
+			property="msgPushStartAt" />
+		<result column="msg_push_end_at" jdbcType="TIMESTAMP" property="msgPushEndAt" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_id, msg_type, msg_title, msg_content, msg_client,
+		msg_status,
+		msg_read_at,
+		created_at, updated_at, msg_push_status,
+		msg_push_start_at, msg_push_end_at
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_cust_user_msg
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		ot_cust_user_msg
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.zsgc.core.model.CustUserMsg">
+		insert into ot_cust_user_msg
+		(id, user_id, msg_type,
+		msg_title, msg_content, msg_client,
+		msg_status,
+		msg_read_at, created_at,
+		updated_at, msg_push_status,
+		msg_push_start_at,
+		msg_push_end_at)
+		values (#{id,jdbcType=BIGINT},
+		#{userId,jdbcType=INTEGER},
+		#{msgType,jdbcType=TINYINT},
+		#{msgTitle,jdbcType=VARCHAR}, #{msgContent,jdbcType=VARCHAR},
+		#{msgClient,jdbcType=VARCHAR},
+		#{msgStatus,jdbcType=TINYINT},
+		#{msgReadAt,jdbcType=TIMESTAMP},
+		#{createdAt,jdbcType=TIMESTAMP},
+		#{updatedAt,jdbcType=TIMESTAMP}, #{msgPushStatus,jdbcType=TINYINT},
+		#{msgPushStartAt,jdbcType=TIMESTAMP},
+		#{msgPushEndAt,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" useGeneratedKeys="true"
+		keyProperty="id" parameterType="com.zsgc.core.model.CustUserMsg">
+		insert into ot_cust_user_msg
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="msgType != null">
+				msg_type,
+			</if>
+			<if test="msgTitle != null">
+				msg_title,
+			</if>
+			<if test="msgContent != null">
+				msg_content,
+			</if>
+			<if test="msgClient != null">
+				msg_client,
+			</if>
+			<if test="msgStatus != null">
+				msg_status,
+			</if>
+			<if test="msgReadAt != null">
+				msg_read_at,
+			</if>
+			<if test="createdAt != null">
+				created_at,
+			</if>
+			<if test="updatedAt != null">
+				updated_at,
+			</if>
+			<if test="msgPushStatus != null">
+				msg_push_status,
+			</if>
+			<if test="msgPushStartAt != null">
+				msg_push_start_at,
+			</if>
+			<if test="msgPushEndAt != null">
+				msg_push_end_at,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="msgType != null">
+				#{msgType,jdbcType=TINYINT},
+			</if>
+			<if test="msgTitle != null">
+				#{msgTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="msgContent != null">
+				#{msgContent,jdbcType=VARCHAR},
+			</if>
+			<if test="msgClient != null">
+				#{msgClient,jdbcType=VARCHAR},
+			</if>
+			<if test="msgStatus != null">
+				#{msgStatus,jdbcType=TINYINT},
+			</if>
+			<if test="msgReadAt != null">
+				#{msgReadAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdAt != null">
+				#{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				#{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="msgPushStatus != null">
+				#{msgPushStatus,jdbcType=TINYINT},
+			</if>
+			<if test="msgPushStartAt != null">
+				#{msgPushStartAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="msgPushEndAt != null">
+				#{msgPushEndAt,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.zsgc.core.model.CustUserMsg">
+		update ot_cust_user_msg
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="msgType != null">
+				msg_type = #{msgType,jdbcType=TINYINT},
+			</if>
+			<if test="msgTitle != null">
+				msg_title = #{msgTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="msgContent != null">
+				msg_content = #{msgContent,jdbcType=VARCHAR},
+			</if>
+			<if test="msgClient != null">
+				msg_client = #{msgClient,jdbcType=VARCHAR},
+			</if>
+			<if test="msgStatus != null">
+				msg_status = #{msgStatus,jdbcType=TINYINT},
+			</if>
+			<if test="msgReadAt != null">
+				msg_read_at = #{msgReadAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="msgPushStatus != null">
+				msg_push_status = #{msgPushStatus,jdbcType=TINYINT},
+			</if>
+			<if test="msgPushStartAt != null">
+				msg_push_start_at = #{msgPushStartAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="msgPushEndAt != null">
+				msg_push_end_at = #{msgPushEndAt,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.zsgc.core.model.CustUserMsg">
+		update
+		ot_cust_user_msg
+		set user_id = #{userId,jdbcType=INTEGER},
+		msg_type =
+		#{msgType,jdbcType=TINYINT},
+		msg_title = #{msgTitle,jdbcType=VARCHAR},
+		msg_content = #{msgContent,jdbcType=VARCHAR},
+		msg_client =
+		#{msgClient,jdbcType=VARCHAR},
+		msg_status =
+		#{msgStatus,jdbcType=TINYINT},
+		msg_read_at =
+		#{msgReadAt,jdbcType=TIMESTAMP},
+		created_at =
+		#{createdAt,jdbcType=TIMESTAMP},
+		updated_at =
+		#{updatedAt,jdbcType=TIMESTAMP},
+		msg_push_status =
+		#{msgPushStatus,jdbcType=TINYINT},
+		msg_push_start_at =
+		#{msgPushStartAt,jdbcType=TIMESTAMP},
+		msg_push_end_at =
+		#{msgPushEndAt,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<insert id="insertMore" parameterType="java.util.List">
+
+		insert into ot_cust_user_msg ( user_id, msg_type,
+		msg_title,
+		msg_client,
+		msg_status,
+		msg_read_at, created_at, updated_at,
+		msg_content,msg_push_status,msg_push_start_at,msg_push_end_at)
+		values
+		<foreach collection="list" item="bean" index="index"
+			separator=",">
+			(#{bean.userId,jdbcType=INTEGER},
+			#{bean.msgType,jdbcType=TINYINT},
+			#{bean.msgTitle,jdbcType=VARCHAR},
+			#{bean.msgClient,jdbcType=VARCHAR},
+			#{bean.msgStatus,jdbcType=TINYINT},
+			#{bean.msgReadAt,jdbcType=TIMESTAMP},
+			#{bean.createdAt,jdbcType=TIMESTAMP},
+			#{bean.updatedAt,jdbcType=TIMESTAMP},
+			#{bean.msgContent},
+			#{bean.msgPushStatus},
+			#{bean.msgPushStartAt},
+			#{bean.msgPushEndAt}
+			)
+		</foreach>
+	</insert>
+	<select id="selAllMsgByOrderC" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_cust_user_msg
+		where user_id = #{bean.userId,jdbcType=BIGINT}
+		and msg_type in (1,2,3,4,5)
+		<if test="bean.msgStatus != null">
+			and msg_status = #{bean.msgStatus,jdbcType=TINYINT}
+		</if>
+		order by created_at desc
+		LIMIT
+		#{count},#{PageSize};
+	</select>
+
+	<select id="selAllMsgByOrderR" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_cust_user_msg
+		where user_id = #{bean.userId,jdbcType=BIGINT}
+		and msg_type in (1,2,3,4,5)
+		and msg_status =
+		#{bean.msgStatus,jdbcType=TINYINT} order by
+		msg_read_at desc
+		LIMIT
+		#{count},#{PageSize};
+	</select>
+
+
+	<update id="updateAllMsg" parameterType="com.zsgc.core.model.CustUserMsg">
+		update
+		ot_cust_user_msg
+		set
+		msg_status =
+		#{msgStatus,jdbcType=TINYINT},
+		msg_read_at =
+		#{msgReadAt,jdbcType=TIMESTAMP}
+		where user_id =
+		#{userId,jdbcType=BIGINT}
+	</update>
+
+	<select id="selAllCount" parameterType="com.zsgc.core.model.CustUserMsg"
+		resultType="java.lang.Integer">
+		select
+		COUNT(0)
+		from ot_cust_user_msg
+		where user_id =
+		#{userId,jdbcType=BIGINT}
+		<if test="msgStatus != null">
+			and msg_status = #{msgStatus,jdbcType=TINYINT}
+		</if>
+	</select>
+
+	<update id="updateMsgPush" parameterType="java.util.Map">
+		UPDATE
+		`ot_cust_user_msg`
+		SET
+		`msg_push_status` = 0,
+		updated_at = #{updatedAt}
+		WHERE `id` = #{id};
+	</update>
+
+	<select id="selAllMsgPush" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		SELECT
+		`id`,
+		`user_id`,
+		`msg_content`,
+		`msg_push_start_at`,
+		`msg_push_end_at`
+		FROM
+		`ot_cust_user_msg`
+		where msg_push_status =
+		#{status}
+	</select>
+	<delete id="delByid" parameterType="java.lang.Long">
+		DELETE
+		FROM
+		`ot_cust_user_msg`
+		WHERE `id` = #{id} and msg_push_status = 1;
+	</delete>
+</mapper>

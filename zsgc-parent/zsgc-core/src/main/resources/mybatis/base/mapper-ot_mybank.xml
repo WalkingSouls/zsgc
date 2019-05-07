@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybankDAO">
+  <resultMap id="mybank" type="com.zsgc.core.model.Mybank">
+    <result property="id" column="id" />
+    <result property="uid" column="uid" />
+    <result property="bid" column="bid" />
+    <result property="name" column="name" />
+    <result property="number" column="number" />
+    <result property="mobile" column="mobile" />
+    <result property="province" column="province" />
+    <result property="city" column="city" />
+    <result property="branch" column="branch" />
+    <result property="createdAt" column="created_at" />
+    <result property="updatedAt" column="updated_at" />
+  </resultMap>
+
+  <sql id="sql_insert_column_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,id</if>
+      <if test="entity.uid != null">,uid</if>
+      <if test="entity.bid != null">,bid</if>
+      <if test="entity.name != null and entity.name != ''">,name</if>
+      <if test="entity.number != null and entity.number != ''">,number</if>
+      <if test="entity.mobile != null and entity.mobile != ''">,mobile</if>
+      <if test="entity.province != null and entity.province != ''">,province</if>
+      <if test="entity.city != null and entity.city != ''">,city</if>
+      <if test="entity.branch != null and entity.branch != ''">,branch</if>
+      <if test="entity.createdAt != null">,created_at</if>
+      <if test="entity.createdAt == null">,created_at</if>
+      <if test="entity.updatedAt != null">,updated_at</if>
+      <if test="entity.updatedAt == null">,updated_at</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_insert_property_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,#{entity.id}</if>
+      <if test="entity.uid != null">,#{entity.uid}</if>
+      <if test="entity.bid != null">,#{entity.bid}</if>
+      <if test="entity.name != null and entity.name != ''">,#{entity.name}</if>
+      <if test="entity.number != null and entity.number != ''">,#{entity.number}</if>
+      <if test="entity.mobile != null and entity.mobile != ''">,#{entity.mobile}</if>
+      <if test="entity.province != null and entity.province != ''">,#{entity.province}</if>
+      <if test="entity.city != null and entity.city != ''">,#{entity.city}</if>
+      <if test="entity.branch != null and entity.branch != ''">,#{entity.branch}</if>
+      <if test="entity.createdAt != null">,#{entity.createdAt}</if>
+      <if test="entity.createdAt == null">,NOW()</if>
+      <if test="entity.updatedAt != null">,#{entity.updatedAt}</if>
+      <if test="entity.updatedAt == null">,NOW()</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_column_list">
+    id
+    ,uid
+    ,bid
+    ,name
+    ,number
+    ,mobile
+    ,province
+    ,city
+    ,branch
+    ,created_at
+    ,updated_at
+  </sql>
+
+  <sql id="sql_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="entity != null">
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('id')">
+            ,id = #{entity.id, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.id != null">,id = #{entity.id}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('uid')">
+            ,uid = #{entity.uid, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.uid != null">,uid = #{entity.uid}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('bid')">
+            ,bid = #{entity.bid, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.bid != null">,bid = #{entity.bid}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('name')">
+            ,name = #{entity.name, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.name != null and entity.name != ''">,name = #{entity.name}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('number')">
+            ,number = #{entity.number, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.number != null and entity.number != ''">,number = #{entity.number}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('mobile')">
+            ,mobile = #{entity.mobile, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.mobile != null and entity.mobile != ''">,mobile = #{entity.mobile}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('province')">
+            ,province = #{entity.province, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.province != null and entity.province != ''">,province = #{entity.province}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('city')">
+            ,city = #{entity.city, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.city != null and entity.city != ''">,city = #{entity.city}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('branch')">
+            ,branch = #{entity.branch, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.branch != null and entity.branch != ''">,branch = #{entity.branch}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('createdAt')">
+            ,created_at = #{entity.createdAt, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.createdAt != null">,created_at = #{entity.createdAt}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('updatedAt')">
+            ,updated_at = #{entity.updatedAt, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.updatedAt != null">,updated_at = #{entity.updatedAt}</if>
+            <if test="entity.updatedAt == null">,updated_at = NOW()</if>
+          </otherwise>
+        </choose>
+        <if test="!entity.incrementUpdateMap.isEmpty()">
+          ,
+          <foreach collection="entity.incrementUpdateMap" index="key" item="value" separator=",">
+            ${key} = ${key} + #{value}
+          </foreach>
+        </if>
+      </if>
+    </trim>
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null">AND id = #{condition.id}</if>
+      <if test="condition.uid != null">AND uid = #{condition.uid}</if>
+      <if test="condition.bid != null">AND bid = #{condition.bid}</if>
+      <if test="condition.name != null and condition.name != ''">AND name = #{condition.name}</if>
+      <if test="condition.number != null and condition.number != ''">AND number = #{condition.number}</if>
+      <if test="condition.mobile != null and condition.mobile != ''">AND mobile = #{condition.mobile}</if>
+      <if test="condition.province != null and condition.province != ''">AND province = #{condition.province}</if>
+      <if test="condition.city != null and condition.city != ''">AND city = #{condition.city}</if>
+      <if test="condition.branch != null and condition.branch != ''">AND branch = #{condition.branch}</if>
+      <if test="condition.createdAt != null">AND created_at = #{condition.createdAt}</if>
+      <if test="condition.updatedAt != null">AND updated_at = #{condition.updatedAt}</if>
+      <if test="!condition.expressionChainList.empty">
+        AND
+        <foreach collection="condition.expressionChainList" item="expressionChain" separator="OR">
+          <if test="!expressionChain.expressionList.empty">
+            <foreach collection="expressionChain.expressionList" item="expression" separator="AND">
+              <choose>
+                <when test="expression.type == 0">
+                  ${expression.column} ${expression.operator}
+                </when>
+                <when test="expression.type == 1">
+                  ${expression.column} ${expression.operator} #{expression.value}
+                </when>
+                <when test="expression.type == 2">
+                  ${expression.column} ${expression.operator} #{expression.value} AND #{expression.value1}
+                </when>
+                <when test="expression.type == 3">
+                  ${expression.column} ${expression.operator}
+                  <foreach collection="expression.values" item="value" open="(" separator="," close=")">
+                    #{value}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </if>
+        </foreach>
+      </if>
+    </if>
+  </sql>
+
+  <sql id="sql_pagination_start">
+  <![CDATA[
+  ]]>
+  </sql>
+
+  <sql id="sql_pagination_end">
+  <![CDATA[
+    LIMIT #{offset}, #{limit}
+  ]]>
+  </sql>
+
+  <insert id="insert" parameterType="java.util.Map">
+    <selectKey keyProperty="entity.id" resultType="java.lang.Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    INSERT INTO ot_mybank (
+      <include refid="sql_insert_column_list" />
+    ) VALUES (
+      <include refid="sql_insert_property_list" />
+    )
+  </insert>
+
+  <select id="get" parameterType="java.util.Map" resultMap="mybank">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_mybank
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="java.util.Map" resultMap="mybank">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_mybank
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultMap="mybank">
+    <if test="offset != null">
+      <include refid="sql_pagination_start" />
+    </if>
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_mybank
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end" />
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(${count_column}) AS count_ FROM ot_mybank
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="aggregate" parameterType="java.util.Map" resultType="java.util.HashMap">
+    SELECT ${aggregate_sql} FROM ot_mybank
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <update id="update" parameterType="java.util.Map">
+    UPDATE ot_mybank
+    <include refid="sql_update_set" />
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </update>
+
+  <update id="updateById" parameterType="java.util.Map">
+    UPDATE ot_mybank
+    <include refid="sql_update_set" />
+    WHERE id = #{id}
+  </update>
+
+  <delete id="remove" parameterType="java.util.Map">
+    DELETE FROM ot_mybank
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </delete>
+
+  <delete id="removeById" parameterType="java.util.Map">
+    DELETE FROM ot_mybank
+    WHERE id = #{id}
+  </delete>
+</mapper>

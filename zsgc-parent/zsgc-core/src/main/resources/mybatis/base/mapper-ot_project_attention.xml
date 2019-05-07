@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projectAttentionDAO">
+  <resultMap id="BaseResultMap" type="com.zsgc.core.model.ProjectAttention">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="u_id" jdbcType="INTEGER" property="uId" />
+    <result column="p_id" jdbcType="INTEGER" property="pId" />
+    <result column="attention" jdbcType="INTEGER" property="attention" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, u_id, p_id, attention, create_date, update_date
+  </sql>
+  <select id="getAttentionState" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select attention
+    from ot_project_attention
+    where u_id = #{uId,jdbcType=INTEGER} and p_id = #{pId} order by update_date desc
+  </select>
+  <select id="getpIdList" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select p_id
+    from ot_project_attention
+    where u_id = #{uId,jdbcType=INTEGER} and attention=#{attention} order by update_date desc
+  </select>
+  
+  <insert id="insert" parameterType="com.zsgc.core.model.ProjectAttention">
+    insert into ot_project_attention (u_id, p_id, 
+      attention, create_date, update_date
+      )
+    values (#{entity.uId,jdbcType=INTEGER}, #{entity.pId,jdbcType=INTEGER}, 
+      #{entity.attention,jdbcType=INTEGER}, #{entity.createDate,jdbcType=TIMESTAMP}, #{entity.updateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+   <update id="updateProAtt" parameterType="com.zsgc.core.model.ProjectAttention">
+    update ot_project_attention
+    set attention = #{attention,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where u_id = #{uId,jdbcType=INTEGER} and p_id=#{pId}
+  </update>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_project_attention
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ot_project_attention
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.zsgc.core.model.ProjectAttention">
+    insert into ot_project_attention
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="pId != null">
+        p_id,
+      </if>
+      <if test="attention != null">
+        attention,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="pId != null">
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="attention != null">
+        #{attention,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsgc.core.model.ProjectAttention">
+    update ot_project_attention
+    <set>
+      <if test="uId != null">
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="pId != null">
+        p_id = #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="attention != null">
+        attention = #{attention,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsgc.core.model.ProjectAttention">
+    update ot_project_attention
+    set u_id = #{uId,jdbcType=INTEGER},
+      p_id = #{pId,jdbcType=INTEGER},
+      attention = #{attention,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

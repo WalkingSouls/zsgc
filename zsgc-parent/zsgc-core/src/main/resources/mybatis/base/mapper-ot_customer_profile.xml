@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customerProfileDAO">
+  <resultMap id="BaseResultMap" type="com.zsgc.core.model.CustomerProfile">
+    <id column="customer_id" jdbcType="INTEGER" property="customerId" />
+    <result column="p_id" jdbcType="INTEGER" property="pId" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+    <result column="customer_job" jdbcType="VARCHAR" property="customerJob" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="del_state" jdbcType="INTEGER" property="delState" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="other" jdbcType="VARCHAR" property="other" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    customer_id, p_id, customer_name, customer_job, telephone, remark, del_state, create_date, 
+    update_date, other, parent_id
+  </sql>
+  <sql id="sql_condition">
+  	<if test="condition != null">
+  	<trim prefix="where" prefixOverrides="AND">
+		<if test="condition.customerId != null">
+        customer_id = #{condition.customerId}
+      </if>
+      <if test="condition.pId != null">
+        AND p_id = #{condition.pId}
+      </if>
+      <if test="condition.customerName != null and condition.customerName != ''">
+        AND customer_name = #{condition.customerName}
+      </if>
+      <if test="condition.customerJob != null and condition.customerJob != ''">
+        AND customer_job = #{condition.customerJob}
+      </if>
+      <if test="condition.telephone != null">
+        AND telephone = #{condition.telephone}
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        AND remark = #{condition.remark}
+      </if>
+      <if test="condition.delState != null">
+        AND del_state = #{condition.delState}
+      </if>
+      <if test="condition.createDate != null">
+        AND create_date = #{condition.createDate}
+      </if>
+      <if test="condition.updateDate != null">
+        AND update_date = #{condition.updateDate}
+      </if>
+      <if test="condition.other != null">
+        AND other = #{condition.other}
+      </if>
+      <if test="condition.parentId != null">
+        AND parent_id = #{condition.parentId}
+      </if> 
+      </trim>	
+  	</if>
+  </sql>
+  <select id="getIdsList" parameterType="java.lang.Integer" resultType="Integer">
+    select 
+    customer_id from ot_customer_profile
+    where p_id = #{pId,jdbcType=INTEGER} and del_state = 1 ;
+  </select>
+  <select id="getByCusId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_customer_profile
+    where customer_id = #{bdid,jdbcType=INTEGER} and del_state = 1 ;
+  </select>
+  <select id="getList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_customer_profile
+    where p_id = #{pId,jdbcType=INTEGER} and del_state = 1 ;
+  </select>
+  <select id="findParentId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_customer_profile
+    where p_id = #{pId,jdbcType=INTEGER} and parent_id = #{parentId} and del_state = 1;
+  </select>
+   <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(${count_column}) from ot_customer_profile
+    <trim prefix="" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+  
+  
+  <insert id="insert" parameterType="java.util.Map">
+    insert into ot_customer_profile (customer_id, p_id, customer_name, 
+      customer_job, telephone, remark, 
+      del_state, create_date, update_date, 
+      other, parent_id)
+    values (#{entity.customerId,jdbcType=INTEGER}, #{entity.pId,jdbcType=INTEGER}, #{entity.customerName,jdbcType=VARCHAR}, 
+      #{entity.customerJob,jdbcType=VARCHAR}, #{entity.telephone,jdbcType=VARCHAR}, #{entity.remark,jdbcType=VARCHAR}, 
+      #{entity.delState,jdbcType=INTEGER}, #{entity.createDate,jdbcType=TIMESTAMP}, #{entity.updateDate,jdbcType=TIMESTAMP}, 
+      #{entity.other,jdbcType=VARCHAR}, #{entity.parentId,jdbcType=INTEGER})
+  </insert>
+  
+  
+  <update id="updateById" parameterType="java.util.Map">
+    update ot_customer_profile
+    set p_id = #{entity.pId,jdbcType=INTEGER},
+      customer_name = #{entity.customerName,jdbcType=VARCHAR},
+      customer_job = #{entity.customerJob,jdbcType=VARCHAR},
+      telephone = #{entity.telephone,jdbcType=VARCHAR},
+      remark = #{entity.remark,jdbcType=VARCHAR},
+      del_state = #{entity.delState,jdbcType=INTEGER},
+      create_date = #{entity.createDate,jdbcType=TIMESTAMP},
+      update_date = #{entity.updateDate,jdbcType=TIMESTAMP},
+      other = #{entity.other,jdbcType=VARCHAR},
+      parent_id = #{entity.parentId,jdbcType=INTEGER}
+    where customer_id = #{entity.customerId,jdbcType=INTEGER} and del_state = 1
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_customer_profile
+    where customer_id = #{customerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ot_customer_profile
+    where customer_id = #{customerId,jdbcType=INTEGER}
+  </delete>
+  <select id="get" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+     from ot_customer_profile
+     <include refid="sql_condition"/>
+  </select>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="customerId" parameterType="com.zsgc.core.model.CustomerProfile">
+    insert into ot_customer_profile
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="customerId != null">
+        customer_id,
+      </if>
+      <if test="pId != null">
+        p_id,
+      </if>
+      <if test="customerName != null">
+        customer_name,
+      </if>
+      <if test="customerJob != null">
+        customer_job,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="delState != null">
+        del_state,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="other != null">
+        other,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="customerId != null">
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="pId != null">
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null">
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerJob != null">
+        #{customerJob,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="delState != null">
+        #{delState,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="other != null">
+        #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsgc.core.model.CustomerProfile">
+    update ot_customer_profile
+    <set>
+      <if test="pId != null">
+        p_id = #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null">
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerJob != null">
+        customer_job = #{customerJob,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="delState != null">
+        del_state = #{delState,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="other != null">
+        other = #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where customer_id = #{customerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsgc.core.model.CustomerProfile">
+    update ot_customer_profile
+    set p_id = #{pId,jdbcType=INTEGER},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_job = #{customerJob,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      del_state = #{delState,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      other = #{other,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER}
+    where customer_id = #{customerId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByALLP" parameterType="com.zsgc.core.model.CustomerProfile" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_customer_profile
+    where parent_id = #{parentId} AND del_state = #{delState} AND p_id = #{pId};
+  </select>
+   <select id="selectByAllC" parameterType="com.zsgc.core.model.CustomerProfile" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_customer_profile
+    where parent_id = #{customerId} AND del_state = #{delState};
+  </select>
+  
+     <select id="SelByPidAll" parameterType="com.zsgc.core.model.CustomerProfile" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_customer_profile
+    where p_id = #{pId} AND del_state = #{delState} order by create_date ;
+  </select>
+  
+</mapper>

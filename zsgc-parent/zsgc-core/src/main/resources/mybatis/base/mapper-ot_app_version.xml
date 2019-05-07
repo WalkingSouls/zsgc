@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="appVersionDAO">
+  <resultMap id="appVersion" type="com.zsgc.core.model.AppVersion">
+    <result property="id" column="id" />
+    <result property="version" column="version" />
+    <result property="versionIos" column="version_ios" />
+    <result property="des" column="des" />
+    <result property="isForce" column="is_force" />
+    <result property="isCodePush" column="is_code_push" />
+    <result property="warnTime" column="warn_time" />
+    <result property="disabled" column="disabled" />
+    <result property="createdAt" column="created_at" />
+    <result property="updatedAt" column="updated_at" />
+  </resultMap>
+
+  <sql id="sql_insert_column_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,id</if>
+      <if test="entity.version != null">,version</if>
+      <if test="entity.versionIos != null">,version_ios</if>
+      <if test="entity.des != null and entity.des != ''">,des</if>
+      <if test="entity.isForce != null">,is_force</if>
+      <if test="entity.isCodePush != null">,is_code_push</if>
+      <if test="entity.warnTime != null">,warn_time</if>
+      <if test="entity.disabled != null">,disabled</if>
+      <if test="entity.createdAt != null">,created_at</if>
+      <if test="entity.createdAt == null">,created_at</if>
+      <if test="entity.updatedAt != null">,updated_at</if>
+      <if test="entity.updatedAt == null">,updated_at</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_insert_property_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,#{entity.id}</if>
+      <if test="entity.version != null">,#{entity.version}</if>
+      <if test="entity.versionIos != null">,#{entity.versionIos}</if>
+      <if test="entity.des != null and entity.des != ''">,#{entity.des}</if>
+      <if test="entity.isForce != null">,#{entity.isForce}</if>
+      <if test="entity.isCodePush != null">,#{entity.isCodePush}</if>
+      <if test="entity.warnTime != null">,#{entity.warnTime}</if>
+      <if test="entity.disabled != null">,#{entity.disabled}</if>
+      <if test="entity.createdAt != null">,#{entity.createdAt}</if>
+      <if test="entity.createdAt == null">,NOW()</if>
+      <if test="entity.updatedAt != null">,#{entity.updatedAt}</if>
+      <if test="entity.updatedAt == null">,NOW()</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_column_list">
+    id
+    ,version
+    ,version_ios
+    ,des
+    ,is_force
+    ,is_code_push
+    ,warn_time
+    ,disabled
+    ,created_at
+    ,updated_at
+  </sql>
+
+  <sql id="sql_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="entity != null">
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('id')">
+            ,id = #{entity.id, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.id != null">,id = #{entity.id}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('version')">
+            ,version = #{entity.version, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.version != null">,version = #{entity.version}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('versionIos')">
+            ,version_ios = #{entity.versionIos, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.versionIos != null">,version_ios = #{entity.versionIos}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('des')">
+            ,des = #{entity.des, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.des != null and entity.des != ''">,des = #{entity.des}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('isForce')">
+            ,is_force = #{entity.isForce, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.isForce != null">,is_force = #{entity.isForce}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('isCodePush')">
+            ,is_code_push = #{entity.isCodePush, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.isCodePush != null">,is_code_push = #{entity.isCodePush}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('warnTime')">
+            ,warn_time = #{entity.warnTime, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.warnTime != null">,warn_time = #{entity.warnTime}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('disabled')">
+            ,disabled = #{entity.disabled, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.disabled != null">,disabled = #{entity.disabled}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('createdAt')">
+            ,created_at = #{entity.createdAt, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.createdAt != null">,created_at = #{entity.createdAt}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('updatedAt')">
+            ,updated_at = #{entity.updatedAt, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.updatedAt != null">,updated_at = #{entity.updatedAt}</if>
+            <if test="entity.updatedAt == null">,updated_at = NOW()</if>
+          </otherwise>
+        </choose>
+        <if test="!entity.incrementUpdateMap.isEmpty()">
+          ,
+          <foreach collection="entity.incrementUpdateMap" index="key" item="value" separator=",">
+            ${key} = ${key} + #{value}
+          </foreach>
+        </if>
+      </if>
+    </trim>
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null">AND id = #{condition.id}</if>
+      <if test="condition.version != null">AND version = #{condition.version}</if>
+      <if test="condition.versionIos != null">AND version_ios = #{condition.versionIos}</if>
+      <if test="condition.des != null and condition.des != ''">AND des = #{condition.des}</if>
+      <if test="condition.isForce != null">AND is_force = #{condition.isForce}</if>
+      <if test="condition.isCodePush != null">AND is_code_push = #{condition.isCodePush}</if>
+      <if test="condition.warnTime != null">AND warn_time = #{condition.warnTime}</if>
+      <if test="condition.disabled != null">AND disabled = #{condition.disabled}</if>
+      <if test="condition.createdAt != null">AND created_at = #{condition.createdAt}</if>
+      <if test="condition.updatedAt != null">AND updated_at = #{condition.updatedAt}</if>
+      <if test="!condition.expressionChainList.empty">
+        AND
+        <foreach collection="condition.expressionChainList" item="expressionChain" separator="OR">
+          <if test="!expressionChain.expressionList.empty">
+            <foreach collection="expressionChain.expressionList" item="expression" separator="AND">
+              <choose>
+                <when test="expression.type == 0">
+                  ${expression.column} ${expression.operator}
+                </when>
+                <when test="expression.type == 1">
+                  ${expression.column} ${expression.operator} #{expression.value}
+                </when>
+                <when test="expression.type == 2">
+                  ${expression.column} ${expression.operator} #{expression.value} AND #{expression.value1}
+                </when>
+                <when test="expression.type == 3">
+                  ${expression.column} ${expression.operator}
+                  <foreach collection="expression.values" item="value" open="(" separator="," close=")">
+                    #{value}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </if>
+        </foreach>
+      </if>
+    </if>
+  </sql>
+
+  <sql id="sql_pagination_start">
+  <![CDATA[
+  ]]>
+  </sql>
+
+  <sql id="sql_pagination_end">
+  <![CDATA[
+    LIMIT #{offset}, #{limit}
+  ]]>
+  </sql>
+
+  <insert id="insert" parameterType="java.util.Map">
+    <selectKey keyProperty="entity.id" resultType="java.lang.Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    INSERT INTO ot_app_version (
+      <include refid="sql_insert_column_list" />
+    ) VALUES (
+      <include refid="sql_insert_property_list" />
+    )
+  </insert>
+
+  <select id="get" parameterType="java.util.Map" resultMap="appVersion">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_app_version
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="java.util.Map" resultMap="appVersion">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_app_version
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultMap="appVersion">
+    <if test="offset != null">
+      <include refid="sql_pagination_start" />
+    </if>
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_app_version
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end" />
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(${count_column}) AS count_ FROM ot_app_version
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="aggregate" parameterType="java.util.Map" resultType="java.util.HashMap">
+    SELECT ${aggregate_sql} FROM ot_app_version
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <update id="update" parameterType="java.util.Map">
+    UPDATE ot_app_version
+    <include refid="sql_update_set" />
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </update>
+
+  <update id="updateById" parameterType="java.util.Map">
+    UPDATE ot_app_version
+    <include refid="sql_update_set" />
+    WHERE id = #{id}
+  </update>
+
+  <delete id="remove" parameterType="java.util.Map">
+    DELETE FROM ot_app_version
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </delete>
+
+  <delete id="removeById" parameterType="java.util.Map">
+    DELETE FROM ot_app_version
+    WHERE id = #{id}
+  </delete>
+</mapper>

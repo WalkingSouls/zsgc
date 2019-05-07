@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="activityInvitationDAO">
+  <resultMap id="activityInvitation" type="com.zsgc.core.model.ActivityInvitation">
+    <result property="id" column="id" />
+    <result property="registerNumber" column="register_number" />
+    <result property="investedNumber" column="invested_number" />
+    <result property="investedMoney" column="invested_money" />
+    <result property="undistributedMoney" column="undistributed_money" />
+    <result property="couponInvest" column="coupon_invest" />
+    <result property="createdAt" column="created_at" />
+    <result property="updatedAt" column="updated_at" />
+  </resultMap>
+
+  <sql id="sql_insert_column_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,id</if>
+      <if test="entity.registerNumber != null">,register_number</if>
+      <if test="entity.investedNumber != null">,invested_number</if>
+      <if test="entity.investedMoney != null">,invested_money</if>
+      <if test="entity.undistributedMoney != null">,undistributed_money</if>
+      <if test="entity.couponInvest != null">,coupon_invest</if>
+      <if test="entity.createdAt != null">,created_at</if>
+      <if test="entity.createdAt == null">,created_at</if>
+      <if test="entity.updatedAt != null">,updated_at</if>
+      <if test="entity.updatedAt == null">,updated_at</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_insert_property_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,#{entity.id}</if>
+      <if test="entity.registerNumber != null">,#{entity.registerNumber}</if>
+      <if test="entity.investedNumber != null">,#{entity.investedNumber}</if>
+      <if test="entity.investedMoney != null">,#{entity.investedMoney}</if>
+      <if test="entity.undistributedMoney != null">,#{entity.undistributedMoney}</if>
+      <if test="entity.couponInvest != null">,#{entity.couponInvest}</if>
+      <if test="entity.createdAt != null">,#{entity.createdAt}</if>
+      <if test="entity.createdAt == null">,NOW()</if>
+      <if test="entity.updatedAt != null">,#{entity.updatedAt}</if>
+      <if test="entity.updatedAt == null">,NOW()</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_column_list">
+    id
+    ,register_number
+    ,invested_number
+    ,invested_money
+    ,undistributed_money
+    ,coupon_invest
+    ,created_at
+    ,updated_at
+  </sql>
+
+  <sql id="sql_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="entity != null">
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('id')">
+            ,id = #{entity.id, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.id != null">,id = #{entity.id}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('registerNumber')">
+            ,register_number = #{entity.registerNumber, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.registerNumber != null">,register_number = #{entity.registerNumber}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('investedNumber')">
+            ,invested_number = #{entity.investedNumber, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.investedNumber != null">,invested_number = #{entity.investedNumber}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('investedMoney')">
+            ,invested_money = #{entity.investedMoney, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.investedMoney != null">,invested_money = #{entity.investedMoney}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('undistributedMoney')">
+            ,undistributed_money = #{entity.undistributedMoney, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.undistributedMoney != null">,undistributed_money = #{entity.undistributedMoney}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('couponInvest')">
+            ,coupon_invest = #{entity.couponInvest, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.couponInvest != null">,coupon_invest = #{entity.couponInvest}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('createdAt')">
+            ,created_at = #{entity.createdAt, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.createdAt != null">,created_at = #{entity.createdAt}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('updatedAt')">
+            ,updated_at = #{entity.updatedAt, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.updatedAt != null">,updated_at = #{entity.updatedAt}</if>
+            <if test="entity.updatedAt == null">,updated_at = NOW()</if>
+          </otherwise>
+        </choose>
+        <if test="!entity.incrementUpdateMap.isEmpty()">
+          ,
+          <foreach collection="entity.incrementUpdateMap" index="key" item="value" separator=",">
+            ${key} = ${key} + #{value}
+          </foreach>
+        </if>
+      </if>
+    </trim>
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null">AND id = #{condition.id}</if>
+      <if test="condition.registerNumber != null">AND register_number = #{condition.registerNumber}</if>
+      <if test="condition.investedNumber != null">AND invested_number = #{condition.investedNumber}</if>
+      <if test="condition.investedMoney != null">AND invested_money = #{condition.investedMoney}</if>
+      <if test="condition.undistributedMoney != null">AND undistributed_money = #{condition.undistributedMoney}</if>
+      <if test="condition.couponInvest != null">AND coupon_invest = #{condition.couponInvest}</if>
+      <if test="condition.createdAt != null">AND created_at = #{condition.createdAt}</if>
+      <if test="condition.updatedAt != null">AND updated_at = #{condition.updatedAt}</if>
+      <if test="!condition.expressionChainList.empty">
+        AND
+        <foreach collection="condition.expressionChainList" item="expressionChain" separator="OR">
+          <if test="!expressionChain.expressionList.empty">
+            <foreach collection="expressionChain.expressionList" item="expression" separator="AND">
+              <choose>
+                <when test="expression.type == 0">
+                  ${expression.column} ${expression.operator}
+                </when>
+                <when test="expression.type == 1">
+                  ${expression.column} ${expression.operator} #{expression.value}
+                </when>
+                <when test="expression.type == 2">
+                  ${expression.column} ${expression.operator} #{expression.value} AND #{expression.value1}
+                </when>
+                <when test="expression.type == 3">
+                  ${expression.column} ${expression.operator}
+                  <foreach collection="expression.values" item="value" open="(" separator="," close=")">
+                    #{value}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </if>
+        </foreach>
+      </if>
+    </if>
+  </sql>
+
+  <sql id="sql_pagination_start">
+  <![CDATA[
+  ]]>
+  </sql>
+
+  <sql id="sql_pagination_end">
+  <![CDATA[
+    LIMIT #{offset}, #{limit}
+  ]]>
+  </sql>
+
+  <insert id="insert" parameterType="java.util.Map">
+    <selectKey keyProperty="entity.id" resultType="java.lang.Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    INSERT INTO ot_activity_invitation (
+      <include refid="sql_insert_column_list" />
+    ) VALUES (
+      <include refid="sql_insert_property_list" />
+    )
+  </insert>
+
+  <select id="get" parameterType="java.util.Map" resultMap="activityInvitation">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_activity_invitation
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="java.util.Map" resultMap="activityInvitation">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_activity_invitation
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultMap="activityInvitation">
+    <if test="offset != null">
+      <include refid="sql_pagination_start" />
+    </if>
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_activity_invitation
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end" />
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(${count_column}) AS count_ FROM ot_activity_invitation
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="aggregate" parameterType="java.util.Map" resultType="java.util.HashMap">
+    SELECT ${aggregate_sql} FROM ot_activity_invitation
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <update id="update" parameterType="java.util.Map">
+    UPDATE ot_activity_invitation
+    <include refid="sql_update_set" />
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </update>
+
+  <update id="updateById" parameterType="java.util.Map">
+    UPDATE ot_activity_invitation
+    <include refid="sql_update_set" />
+    WHERE id = #{id}
+  </update>
+
+  <delete id="remove" parameterType="java.util.Map">
+    DELETE FROM ot_activity_invitation
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </delete>
+
+  <delete id="removeById" parameterType="java.util.Map">
+    DELETE FROM ot_activity_invitation
+    WHERE id = #{id}
+  </delete>
+</mapper>

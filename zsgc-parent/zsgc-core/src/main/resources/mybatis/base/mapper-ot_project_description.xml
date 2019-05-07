@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projectDescriptionDAO">
+  <resultMap id="BaseResultMap" type="com.zsgc.core.model.ProjectDescription">
+    <id column="des_id" jdbcType="INTEGER" property="desId" />
+    <result column="des_words" jdbcType="VARCHAR" property="desWords" />
+    <result column="p_id" jdbcType="INTEGER" property="pId" />
+    <result column="des_state" jdbcType="INTEGER" property="desState" />
+  </resultMap>
+  <resultMap type="com.zsgc.core.model.ProjectDescription"
+		id="projectDescriptionPictureColl" extends="BaseResultMap">
+		<collection property="list" javaType="List"
+			ofType="com.zsgc.core.model.ProjectDescriptionPicture">
+			<id column="des_p_id" jdbcType="INTEGER" property="desPId" />
+			<result column="p_url" jdbcType="VARCHAR" property="pUrl" />
+			<result column="p_state" jdbcType="INTEGER" property="pState" />
+			<result column="des_id" jdbcType="INTEGER" property="desId" />
+		</collection>
+	</resultMap>
+  <sql id="Base_Column_List">
+    des_id, des_words, p_id, des_state
+  </sql>
+  <select id="getList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from ot_project_description
+    where p_id = #{pId,jdbcType=INTEGER} and des_state = 1
+  </select>
+  <select id="getById" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_project_description
+    where des_id = #{id,jdbcType=INTEGER} and des_state = 1
+  </select>
+  <insert id="insert" parameterType="java.util.Map">
+    insert into ot_project_description (des_id, des_words, p_id, 
+      des_state)
+    values (#{entity.desId,jdbcType=INTEGER}, #{entity.desWords,jdbcType=VARCHAR}, #{entity.pId,jdbcType=INTEGER}, 
+      #{entity.desState,jdbcType=INTEGER})
+  </insert>
+  
+  <update id="updateById" parameterType="java.util.Map">
+    update ot_project_description
+    set des_words = #{entity.desWords,jdbcType=VARCHAR},
+      p_id = #{entity.pId,jdbcType=INTEGER},
+      des_state = #{entity.desState,jdbcType=INTEGER}
+    where des_id = #{entity.desId,jdbcType=INTEGER} and des_state = 1
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_project_description
+    where des_id = #{desId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ot_project_description
+    where des_id = #{desId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="desId" parameterType="com.zsgc.core.model.ProjectDescription">
+    insert into ot_project_description
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="desId != null">
+        des_id,
+      </if>
+      <if test="desWords != null">
+        des_words,
+      </if>
+      <if test="pId != null">
+        p_id,
+      </if>
+      <if test="desState != null">
+        des_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="desId != null">
+        #{desId,jdbcType=INTEGER},
+      </if>
+      <if test="desWords != null">
+        #{desWords,jdbcType=VARCHAR},
+      </if>
+      <if test="pId != null">
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="desState != null">
+        #{desState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsgc.core.model.ProjectDescription">
+    update ot_project_description
+    <set>
+      <if test="desWords != null">
+        des_words = #{desWords,jdbcType=VARCHAR},
+      </if>
+      <if test="pId != null">
+        p_id = #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="desState != null">
+        des_state = #{desState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where des_id = #{desId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsgc.core.model.ProjectDescription">
+    update ot_project_description
+    set des_words = #{desWords,jdbcType=VARCHAR},
+      p_id = #{pId,jdbcType=INTEGER},
+      des_state = #{desState,jdbcType=INTEGER}
+    where des_id = #{desId,jdbcType=INTEGER}
+  </update>
+    <select id="selectByPid" parameterType="com.zsgc.core.model.ProjectDescription" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_project_description
+    where p_id = #{pId,jdbcType=INTEGER} AND des_state = #{desState};
+  </select>
+    <select id="selOneByPid" parameterType="com.zsgc.core.model.ProjectDescription" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_project_description
+    where p_id = #{pId,jdbcType=INTEGER} AND des_state = #{desState} and des_words is not null and des_words != ""
+    limit 1;
+  </select>
+</mapper>

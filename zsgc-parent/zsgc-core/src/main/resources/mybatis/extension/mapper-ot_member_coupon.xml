@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+		"-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="memberCouponDAO">
+  <select id="countMemberCouponNumber" resultType="java.lang.Integer">
+	SELECT count(DISTINCT uid) AS memberCouponNum FROM ot_member_coupon AS mc
+	<where>
+	  <if test="todayBegin != null">mc.used_at <![CDATA[ >= ]]> #{todayBegin}</if>
+	  <if test="todayEnd != null">AND mc.used_at <![CDATA[ <= ]]> #{todayEnd}</if>
+	</where>
+  </select>
+</mapper>

@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moneyDAO">
+  <resultMap id="money" type="com.zsgc.core.model.Money">
+    <result property="id" column="id" />
+    <result property="uid" column="uid" />
+    <result property="balance" column="balance" />
+    <result property="freeze" column="freeze" />
+    <result property="totleRechargeMoney" column="totle_recharge_money" />
+    <result property="totleWithdrawMoney" column="totle_withdraw_money" />
+    <result property="totleInvestMoney" column="totle_invest_money" />
+    <result property="receivableInvestMoney" column="receivable_invest_money" />
+    <result property="totleInterestMoney" column="totle_interest_money" />
+    <result property="receivableInterestMoney" column="receivable_interest_money" />
+    <result property="version" column="version" />
+    <result property="totleWageMoney" column="totle_wage_money" />
+  </resultMap>
+
+  <sql id="sql_insert_column_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,id</if>
+      <if test="entity.uid != null">,uid</if>
+      <if test="entity.balance != null">,balance</if>
+      <if test="entity.freeze != null">,freeze</if>
+      <if test="entity.totleRechargeMoney != null">,totle_recharge_money</if>
+      <if test="entity.totleWithdrawMoney != null">,totle_withdraw_money</if>
+      <if test="entity.totleInvestMoney != null">,totle_invest_money</if>
+      <if test="entity.receivableInvestMoney != null">,receivable_invest_money</if>
+      <if test="entity.totleInterestMoney != null">,totle_interest_money</if>
+      <if test="entity.receivableInterestMoney != null">,receivable_interest_money</if>
+      <if test="entity.version != null">,version</if>
+      <if test="entity.totleWageMoney != null">,totle_wage_money</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_insert_property_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,#{entity.id}</if>
+      <if test="entity.uid != null">,#{entity.uid}</if>
+      <if test="entity.balance != null">,#{entity.balance}</if>
+      <if test="entity.freeze != null">,#{entity.freeze}</if>
+      <if test="entity.totleRechargeMoney != null">,#{entity.totleRechargeMoney}</if>
+      <if test="entity.totleWithdrawMoney != null">,#{entity.totleWithdrawMoney}</if>
+      <if test="entity.totleInvestMoney != null">,#{entity.totleInvestMoney}</if>
+      <if test="entity.receivableInvestMoney != null">,#{entity.receivableInvestMoney}</if>
+      <if test="entity.totleInterestMoney != null">,#{entity.totleInterestMoney}</if>
+      <if test="entity.receivableInterestMoney != null">,#{entity.receivableInterestMoney}</if>
+      <if test="entity.version != null">,#{entity.version}</if>
+      <if test="entity.totleWageMoney != null">,#{entity.totleWageMoney}</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_column_list">
+    id
+    ,uid
+    ,balance
+    ,freeze
+    ,totle_recharge_money
+    ,totle_withdraw_money
+    ,totle_invest_money
+    ,receivable_invest_money
+    ,totle_interest_money
+    ,receivable_interest_money
+    ,version
+    ,totle_wage_money
+  </sql>
+
+  <sql id="sql_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="entity != null">
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('id')">
+            ,id = #{entity.id, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.id != null">,id = #{entity.id}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('uid')">
+            ,uid = #{entity.uid, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.uid != null">,uid = #{entity.uid}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('balance')">
+            ,balance = #{entity.balance, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.balance != null">,balance = #{entity.balance}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('freeze')">
+            ,freeze = #{entity.freeze, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.freeze != null">,freeze = #{entity.freeze}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('totleRechargeMoney')">
+            ,totle_recharge_money = #{entity.totleRechargeMoney, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.totleRechargeMoney != null">,totle_recharge_money = #{entity.totleRechargeMoney}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('totleWithdrawMoney')">
+            ,totle_withdraw_money = #{entity.totleWithdrawMoney, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.totleWithdrawMoney != null">,totle_withdraw_money = #{entity.totleWithdrawMoney}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('totleInvestMoney')">
+            ,totle_invest_money = #{entity.totleInvestMoney, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.totleInvestMoney != null">,totle_invest_money = #{entity.totleInvestMoney}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('receivableInvestMoney')">
+            ,receivable_invest_money = #{entity.receivableInvestMoney, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.receivableInvestMoney != null">,receivable_invest_money = #{entity.receivableInvestMoney}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('totleInterestMoney')">
+            ,totle_interest_money = #{entity.totleInterestMoney, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.totleInterestMoney != null">,totle_interest_money = #{entity.totleInterestMoney}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('receivableInterestMoney')">
+            ,receivable_interest_money = #{entity.receivableInterestMoney, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.receivableInterestMoney != null">,receivable_interest_money = #{entity.receivableInterestMoney}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('version')">
+            ,version = #{entity.version, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.version != null">,version = #{entity.version}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('totleWageMoney')">
+            ,totle_wage_money = #{entity.totleWageMoney, jdbcType=DECIMAL}
+          </when>
+          <otherwise>
+            <if test="entity.totleWageMoney != null">,totle_wage_money = #{entity.totleWageMoney}</if>
+          </otherwise>
+        </choose>
+        <if test="!entity.incrementUpdateMap.isEmpty()">
+          ,
+          <foreach collection="entity.incrementUpdateMap" index="key" item="value" separator=",">
+            ${key} = ${key} + #{value}
+          </foreach>
+        </if>
+      </if>
+    </trim>
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null">AND id = #{condition.id}</if>
+      <if test="condition.uid != null">AND uid = #{condition.uid}</if>
+      <if test="condition.balance != null">AND balance = #{condition.balance}</if>
+      <if test="condition.freeze != null">AND freeze = #{condition.freeze}</if>
+      <if test="condition.totleRechargeMoney != null">AND totle_recharge_money = #{condition.totleRechargeMoney}</if>
+      <if test="condition.totleWithdrawMoney != null">AND totle_withdraw_money = #{condition.totleWithdrawMoney}</if>
+      <if test="condition.totleInvestMoney != null">AND totle_invest_money = #{condition.totleInvestMoney}</if>
+      <if test="condition.receivableInvestMoney != null">AND receivable_invest_money = #{condition.receivableInvestMoney}</if>
+      <if test="condition.totleInterestMoney != null">AND totle_interest_money = #{condition.totleInterestMoney}</if>
+      <if test="condition.receivableInterestMoney != null">AND receivable_interest_money = #{condition.receivableInterestMoney}</if>
+      <if test="condition.version != null">AND version = #{condition.version}</if>
+      <if test="condition.totleWageMoney != null">AND totle_wage_money = #{condition.totleWageMoney}</if>
+      <if test="!condition.expressionChainList.empty">
+        AND
+        <foreach collection="condition.expressionChainList" item="expressionChain" separator="OR">
+          <if test="!expressionChain.expressionList.empty">
+            <foreach collection="expressionChain.expressionList" item="expression" separator="AND">
+              <choose>
+                <when test="expression.type == 0">
+                  ${expression.column} ${expression.operator}
+                </when>
+                <when test="expression.type == 1">
+                  ${expression.column} ${expression.operator} #{expression.value}
+                </when>
+                <when test="expression.type == 2">
+                  ${expression.column} ${expression.operator} #{expression.value} AND #{expression.value1}
+                </when>
+                <when test="expression.type == 3">
+                  ${expression.column} ${expression.operator}
+                  <foreach collection="expression.values" item="value" open="(" separator="," close=")">
+                    #{value}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </if>
+        </foreach>
+      </if>
+    </if>
+  </sql>
+
+  <sql id="sql_pagination_start">
+  <![CDATA[
+  ]]>
+  </sql>
+
+  <sql id="sql_pagination_end">
+  <![CDATA[
+    LIMIT #{offset}, #{limit}
+  ]]>
+  </sql>
+
+  <insert id="insert" parameterType="java.util.Map">
+    <selectKey keyProperty="entity.id" resultType="java.lang.Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    INSERT INTO ot_money (
+      <include refid="sql_insert_column_list" />
+    ) VALUES (
+      <include refid="sql_insert_property_list" />
+    )
+  </insert>
+
+  <select id="get" parameterType="java.util.Map" resultMap="money">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_money
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="java.util.Map" resultMap="money">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_money
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultMap="money">
+    <if test="offset != null">
+      <include refid="sql_pagination_start" />
+    </if>
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_money
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end" />
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(${count_column}) AS count_ FROM ot_money
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="aggregate" parameterType="java.util.Map" resultType="java.util.HashMap">
+    SELECT ${aggregate_sql} FROM ot_money
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <update id="update" parameterType="java.util.Map">
+    UPDATE ot_money
+    <include refid="sql_update_set" />
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </update>
+
+  <update id="updateById" parameterType="java.util.Map">
+    UPDATE ot_money
+    <include refid="sql_update_set" />
+    WHERE id = #{id}
+  </update>
+
+  <delete id="remove" parameterType="java.util.Map">
+    DELETE FROM ot_money
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </delete>
+
+  <delete id="removeById" parameterType="java.util.Map">
+    DELETE FROM ot_money
+    WHERE id = #{id}
+  </delete>
+</mapper>

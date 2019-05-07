@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ucenterMemberDAO">
+  <resultMap id="ucenterMember" type="com.zsgc.core.model.UcenterMember">
+    <result property="id" column="id" />
+    <result property="username" column="username" />
+    <result property="password" column="password" />
+    <result property="tradingPassword" column="trading_password" />
+    <result property="isAuthenticated" column="is_authenticated" />
+    <result property="isCheck" column="is_check" />
+    <result property="checkType" column="check_type" />
+    <result property="organize" column="organize" />
+    <result property="company" column="company" />
+    <result property="zone" column="zone" />
+    <result property="isBindBankCard" column="is_bind_bank_card" />
+    <result property="name" column="name" />
+    <result property="avatarPath" column="avatar_path" />
+    <result property="email" column="email" />
+    <result property="mobile" column="mobile" />
+    <result property="createdAt" column="created_at" />
+    <result property="regIp" column="reg_ip" />
+    <result property="lastLoginTime" column="last_login_time" />
+    <result property="lastLoginIp" column="last_login_ip" />
+    <result property="updatedAt" column="updated_at" />
+    <result property="status" column="status" />
+    <result property="registerFrom" column="register_from" />
+    <result property="friendIncomeStatus" column="friend_income_status" />
+    <result property="sex" column="sex" />
+    <result property="birthday" column="birthday" />
+    <result property="qq" column="qq" />
+    <result property="signature" column="signature" />
+    <result property="score" column="score" />
+    <result property="experience" column="experience" />
+    <result property="continuLogin" column="continu_login" />
+    <result property="login" column="login" />
+    <result property="type" column="type" />
+    <result property="manager" column="manager" />
+    <result property="salesmanager" column="salesmanager" />
+    <result property="registerId" column="register_id" />
+    <result property="sid" column="sid" />
+    <result property="material" column="material" />
+    <result property="typeid" column="typeid" />
+    <result property="lx" column="lx" />
+    <result property="referrerId" column="referrer_id" />
+    <result property="referrerType" column="referrer_type" />
+    <result property="referrerUrl" column="referrer_url" />
+    <result property="packageName" column="package_name" />
+    <result property="queryStr" column="query_str" />
+    <result property="area" column="area" />
+    <result property="invitationCode" column="invitation_code" />
+    <result property="firstInvestAt" column="first_invest_at" />
+    <result property="errLoginTimes" column="err_login_times" />
+  </resultMap>
+
+  <sql id="sql_insert_column_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,id</if>
+      <if test="entity.username != null and entity.username != ''">,username</if>
+      <if test="entity.password != null and entity.password != ''">,password</if>
+      <if test="entity.tradingPassword != null and entity.tradingPassword != ''">,trading_password</if>
+      <if test="entity.isAuthenticated != null">,is_authenticated</if>
+      <if test="entity.isCheck != null">,is_check</if>
+      <if test="entity.checkType != null">,check_type</if>
+      <if test="entity.company != null and entity.company !=''">,company</if>organize
+      <if test="entity.organize != null and entity.organize !=''">,organize</if>
+      <if test="entity.zone != null and entity.zone !=''">,zone</if>
+      <if test="entity.isBindBankCard != null">,is_bind_bank_card</if>
+      <if test="entity.name != null and entity.name != ''">,name</if>
+      <if test="entity.avatarPath != null and entity.avatarPath != ''">,avatar_path</if>
+      <if test="entity.email != null and entity.email != ''">,email</if>
+      <if test="entity.mobile != null and entity.mobile != ''">,mobile</if>
+      <if test="entity.createdAt != null">,created_at</if>
+      <if test="entity.createdAt == null">,created_at</if>
+      <if test="entity.regIp != null and entity.regIp != ''">,reg_ip</if>
+      <if test="entity.lastLoginTime != null">,last_login_time</if>
+      <if test="entity.lastLoginIp != null and entity.lastLoginIp != ''">,last_login_ip</if>
+      <if test="entity.updatedAt != null">,updated_at</if>
+      <if test="entity.updatedAt == null">,updated_at</if>
+      <if test="entity.status != null">,status</if>
+      <if test="entity.registerFrom != null">,register_from</if>
+      <if test="entity.friendIncomeStatus != null">,friend_income_status</if>
+      <if test="entity.sex != null">,sex</if>
+      <if test="entity.birthday != null">,birthday</if>
+      <if test="entity.qq != null and entity.qq != ''">,qq</if>
+      <if test="entity.signature != null and entity.signature != ''">,signature</if>
+      <if test="entity.score != null">,score</if>
+      <if test="entity.experience != null">,experience</if>
+      <if test="entity.continuLogin != null">,continu_login</if>
+      <if test="entity.login != null">,login</if>
+      <if test="entity.type != null">,type</if>
+      <if test="entity.manager != null">,manager</if>
+      <if test="entity.salesmanager != null">,salesmanager</if>
+      <if test="entity.registerId != null and entity.registerId != ''">,register_id</if>
+      <if test="entity.sid != null and entity.sid != ''">,sid</if>
+      <if test="entity.material != null and entity.material != ''">,material</if>
+      <if test="entity.typeid != null">,typeid</if>
+      <if test="entity.lx != null">,lx</if>
+      <if test="entity.referrerId != null">,referrer_id</if>
+      <if test="entity.referrerType != null">,referrer_type</if>
+      <if test="entity.referrerUrl != null and entity.referrerUrl != ''">,referrer_url</if>
+      <if test="entity.packageName != null and entity.packageName != ''">,package_name</if>
+      <if test="entity.queryStr != null and entity.queryStr != ''">,query_str</if>
+      <if test="entity.area != null and entity.area != ''">,area</if>
+      <if test="entity.invitationCode != null and entity.invitationCode != ''">,invitation_code</if>
+      <if test="entity.firstInvestAt != null">,first_invest_at</if>
+	  <if test="entity.errLoginTimes != null">,err_login_times</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_insert_property_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null">,#{entity.id}</if>
+      <if test="entity.username != null and entity.username != ''">,#{entity.username}</if>
+      <if test="entity.password != null and entity.password != ''">,#{entity.password}</if>
+      <if test="entity.tradingPassword != null and entity.tradingPassword != ''">,#{entity.tradingPassword}</if>
+      <if test="entity.isAuthenticated != null">,#{entity.isAuthenticated}</if>
+       <if test="entity.isCheck != null">,#{entity.isCheck}</if>
+       <if test="entity.checkType != null">,#{entity.checkType}</if>
+       <if test="entity.company != null and entity.company !=''">,#{entity.company}</if>
+       <if test="entity.organize != null and entity.organize !=''">,#{entity.organize}</if>
+       <if test="entity.zone != null and entity.zone != ''">,#{entity.zone}</if>
+      <if test="entity.isBindBankCard != null">,#{entity.isBindBankCard}</if>
+      <if test="entity.name != null and entity.name != ''">,#{entity.name}</if>
+      <if test="entity.avatarPath != null and entity.avatarPath != ''">,#{entity.avatarPath}</if>
+      <if test="entity.email != null and entity.email != ''">,#{entity.email}</if>
+      <if test="entity.mobile != null and entity.mobile != ''">,#{entity.mobile}</if>
+      <if test="entity.createdAt != null">,#{entity.createdAt}</if>
+      <if test="entity.createdAt == null">,NOW()</if>
+      <if test="entity.regIp != null and entity.regIp != ''">,#{entity.regIp}</if>
+      <if test="entity.lastLoginTime != null">,#{entity.lastLoginTime}</if>
+      <if test="entity.lastLoginIp != null and entity.lastLoginIp != ''">,#{entity.lastLoginIp}</if>
+      <if test="entity.updatedAt != null">,#{entity.updatedAt}</if>
+      <if test="entity.updatedAt == null">,NOW()</if>
+      <if test="entity.status != null">,#{entity.status}</if>
+      <if test="entity.registerFrom != null">,#{entity.registerFrom}</if>
+      <if test="entity.friendIncomeStatus != null">,#{entity.friendIncomeStatus}</if>
+      <if test="entity.sex != null">,#{entity.sex}</if>
+      <if test="entity.birthday != null">,#{entity.birthday}</if>
+      <if test="entity.qq != null and entity.qq != ''">,#{entity.qq}</if>
+      <if test="entity.signature != null and entity.signature != ''">,#{entity.signature}</if>
+      <if test="entity.score != null">,#{entity.score}</if>
+      <if test="entity.experience != null">,#{entity.experience}</if>
+      <if test="entity.continuLogin != null">,#{entity.continuLogin}</if>
+      <if test="entity.login != null">,#{entity.login}</if>
+      <if test="entity.type != null">,#{entity.type}</if>
+      <if test="entity.manager != null">,#{entity.manager}</if>
+      <if test="entity.salesmanager != null">,#{entity.salesmanager}</if>
+      <if test="entity.registerId != null and entity.registerId != ''">,#{entity.registerId}</if>
+      <if test="entity.sid != null and entity.sid != ''">,#{entity.sid}</if>
+      <if test="entity.material != null and entity.material != ''">,#{entity.material}</if>
+      <if test="entity.typeid != null">,#{entity.typeid}</if>
+      <if test="entity.lx != null">,#{entity.lx}</if>
+      <if test="entity.referrerId != null">,#{entity.referrerId}</if>
+      <if test="entity.referrerType != null">,#{entity.referrerType}</if>
+      <if test="entity.referrerUrl != null and entity.referrerUrl != ''">,#{entity.referrerUrl}</if>
+      <if test="entity.packageName != null and entity.packageName != ''">,#{entity.packageName}</if>
+      <if test="entity.queryStr != null and entity.queryStr != ''">,#{entity.queryStr}</if>
+      <if test="entity.area != null and entity.area != ''">,#{entity.area}</if>
+      <if test="entity.invitationCode != null and entity.invitationCode != ''">,#{entity.invitationCode}</if>
+      <if test="entity.firstInvestAt != null">,#{entity.firstInvestAt}</if>
+      <if test="entity.errLoginTimes != null">,#{entity.errLoginTimes}</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_column_list">
+    id
+    ,username
+    ,password
+    ,trading_password
+    ,is_authenticated
+    ,is_check
+    ,check_type
+    ,company
+    ,organize
+    ,zone
+    ,is_bind_bank_card
+    ,name
+    ,avatar_path
+    ,email
+    ,mobile
+    ,created_at
+    ,reg_ip
+    ,last_login_time
+    ,last_login_ip
+    ,updated_at
+    ,status
+    ,register_from
+    ,friend_income_status
+    ,sex
+    ,birthday
+    ,qq
+    ,signature
+    ,score
+    ,experience
+    ,continu_login
+    ,login
+    ,type
+    ,manager
+    ,salesmanager
+    ,register_id
+    ,sid
+    ,material
+    ,typeid
+    ,lx
+    ,referrer_id
+    ,referrer_type
+    ,referrer_url
+    ,package_name
+    ,query_str
+    ,area
+    ,invitation_code
+    ,first_invest_at
+	,err_login_times
+  </sql>
+
+  <sql id="sql_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="entity != null">
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('id')">
+            ,id = #{entity.id, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.id != null">,id = #{entity.id}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('username')">
+            ,username = #{entity.username, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.username != null and entity.username != ''">,username = #{entity.username}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('password')">
+            ,password = #{entity.password, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.password != null and entity.password != ''">,password = #{entity.password}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('tradingPassword')">
+            ,trading_password = #{entity.tradingPassword, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.tradingPassword != null and entity.tradingPassword != ''">,trading_password = #{entity.tradingPassword}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('isCheck')">
+            ,is_check = #{entity.isCheck, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.isCheck != null">,is_check = #{entity.isCheck}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('checkType')">
+            ,check_type = #{entity.checkType, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.checkType != null">,check_type = #{entity.checkType}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('company')">
+            ,company = #{entity.company, jdbcType=WARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.company != null and entity.company !=''">,company = #{entity.company}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('organize')">
+            ,organize = #{entity.organize, jdbcType=WARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.organize != null and entity.organize !=''">,organize = #{entity.organize}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('zone')">
+            ,zone = #{entity.zone, jdbcType=WARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.zone != null and entity.zone !=''">,zone = #{entity.zone}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('isAuthenticated')">
+            ,is_authenticated = #{entity.isAuthenticated, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.isAuthenticated != null">,is_authenticated = #{entity.isAuthenticated}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('isBindBankCard')">
+            ,is_bind_bank_card = #{entity.isBindBankCard, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.isBindBankCard != null">,is_bind_bank_card = #{entity.isBindBankCard}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('name')">
+            ,name = #{entity.name, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.name != null and entity.name != ''">,name = #{entity.name}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('avatarPath')">
+            ,avatar_path = #{entity.avatarPath, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.avatarPath != null and entity.avatarPath != ''">,avatar_path = #{entity.avatarPath}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('email')">
+            ,email = #{entity.email, jdbcType=CHAR}
+          </when>
+          <otherwise>
+            <if test="entity.email != null and entity.email != ''">,email = #{entity.email}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('mobile')">
+            ,mobile = #{entity.mobile, jdbcType=CHAR}
+          </when>
+          <otherwise>
+            <if test="entity.mobile != null and entity.mobile != ''">,mobile = #{entity.mobile}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('createdAt')">
+            ,created_at = #{entity.createdAt, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.createdAt != null">,created_at = #{entity.createdAt}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('regIp')">
+            ,reg_ip = #{entity.regIp, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.regIp != null and entity.regIp != ''">,reg_ip = #{entity.regIp}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('lastLoginTime')">
+            ,last_login_time = #{entity.lastLoginTime, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.lastLoginTime != null">,last_login_time = #{entity.lastLoginTime}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('lastLoginIp')">
+            ,last_login_ip = #{entity.lastLoginIp, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.lastLoginIp != null and entity.lastLoginIp != ''">,last_login_ip = #{entity.lastLoginIp}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('updatedAt')">
+            ,updated_at = #{entity.updatedAt, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.updatedAt != null">,updated_at = #{entity.updatedAt}</if>
+            <if test="entity.updatedAt == null">,updated_at = NOW()</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('status')">
+            ,status = #{entity.status, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.status != null">,status = #{entity.status}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('registerFrom')">
+            ,register_from = #{entity.registerFrom, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.registerFrom != null">,register_from = #{entity.registerFrom}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('friendIncomeStatus')">
+            ,friend_income_status = #{entity.friendIncomeStatus, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.friendIncomeStatus != null">,friend_income_status = #{entity.friendIncomeStatus}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('sex')">
+            ,sex = #{entity.sex, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.sex != null">,sex = #{entity.sex}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('birthday')">
+            ,birthday = #{entity.birthday, jdbcType=DATE}
+          </when>
+          <otherwise>
+            <if test="entity.birthday != null">,birthday = #{entity.birthday}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('qq')">
+            ,qq = #{entity.qq, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.qq != null and entity.qq != ''">,qq = #{entity.qq}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('signature')">
+            ,signature = #{entity.signature, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.signature != null and entity.signature != ''">,signature = #{entity.signature}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('score')">
+            ,score = #{entity.score, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.score != null">,score = #{entity.score}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('experience')">
+            ,experience = #{entity.experience, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.experience != null">,experience = #{entity.experience}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('continuLogin')">
+            ,continu_login = #{entity.continuLogin, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.continuLogin != null">,continu_login = #{entity.continuLogin}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('login')">
+            ,login = #{entity.login, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.login != null">,login = #{entity.login}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('type')">
+            ,type = #{entity.type, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.type != null">,type = #{entity.type}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('manager')">
+            ,manager = #{entity.manager, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.manager != null">,manager = #{entity.manager}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('salesmanager')">
+            ,salesmanager = #{entity.salesmanager, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.salesmanager != null">,salesmanager = #{entity.salesmanager}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('registerId')">
+            ,register_id = #{entity.registerId, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.registerId != null and entity.registerId != ''">,register_id = #{entity.registerId}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('sid')">
+            ,sid = #{entity.sid, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.sid != null and entity.sid != ''">,sid = #{entity.sid}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('material')">
+            ,material = #{entity.material, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.material != null and entity.material != ''">,material = #{entity.material}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('typeid')">
+            ,typeid = #{entity.typeid, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.typeid != null">,typeid = #{entity.typeid}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('lx')">
+            ,lx = #{entity.lx, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.lx != null">,lx = #{entity.lx}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('referrerId')">
+            ,referrer_id = #{entity.referrerId, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.referrerId != null">,referrer_id = #{entity.referrerId}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('referrerType')">
+            ,referrer_type = #{entity.referrerType, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.referrerType != null">,referrer_type = #{entity.referrerType}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('referrerUrl')">
+            ,referrer_url = #{entity.referrerUrl, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.referrerUrl != null and entity.referrerUrl != ''">,referrer_url = #{entity.referrerUrl}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('packageName')">
+            ,package_name = #{entity.packageName, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.packageName != null and entity.packageName != ''">,package_name = #{entity.packageName}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('queryStr')">
+            ,query_str = #{entity.queryStr, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.queryStr != null and entity.queryStr != ''">,query_str = #{entity.queryStr}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('area')">
+            ,area = #{entity.area, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.area != null and entity.area != ''">,area = #{entity.area}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('invitationCode')">
+            ,invitation_code = #{entity.invitationCode, jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            <if test="entity.invitationCode != null and entity.invitationCode != ''">,invitation_code = #{entity.invitationCode}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('firstInvestAt')">
+            ,first_invest_at = #{entity.firstInvestAt, jdbcType=TIMESTAMP}
+          </when>
+          <otherwise>
+            <if test="entity.firstInvestAt != null">,first_invest_at = #{entity.firstInvestAt}</if>
+          </otherwise>
+        </choose>
+        <choose>
+          <when test="entity.forceUpdateProperties.contains('errLoginTimes')">
+            ,err_login_times = #{entity.errLoginTimes, jdbcType=INTEGER}
+          </when>
+          <otherwise>
+            <if test="entity.errLoginTimes != null">,err_login_times = #{entity.errLoginTimes}</if>
+          </otherwise>
+        </choose>
+        <if test="!entity.incrementUpdateMap.isEmpty()">
+          ,
+          <foreach collection="entity.incrementUpdateMap" index="key" item="value" separator=",">
+            ${key} = ${key} + #{value}
+          </foreach>
+        </if>
+      </if>
+    </trim>
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null">AND id = #{condition.id}</if>
+      <if test="condition.username != null and condition.username != ''">AND username = #{condition.username}</if>
+      <if test="condition.password != null and condition.password != ''">AND password = #{condition.password}</if>
+      <if test="condition.tradingPassword != null and condition.tradingPassword != ''">AND trading_password = #{condition.tradingPassword}</if>
+      <if test="condition.isCheck != null">AND is_check = #{condition.isCheck}</if>
+      <if test="condition.checkType != null">AND check_type = #{condition.checkType}</if>
+      <if test="condition.company != null and condition.company !=''">AND company = #{condition.company}</if>
+      <if test="condition.organize != null and condition.organize !=''">AND organize = #{condition.organize}</if>
+      <if test="condition.zone != null and condition.zone !=''">AND zone = #{condition.zone}</if>
+      <if test="condition.isAuthenticated != null">AND is_authenticated = #{condition.isAuthenticated}</if>
+      <if test="condition.isBindBankCard != null">AND is_bind_bank_card = #{condition.isBindBankCard}</if>
+      <if test="condition.name != null and condition.name != ''">AND name = #{condition.name}</if>
+      <if test="condition.avatarPath != null and condition.avatarPath != ''">AND avatar_path = #{condition.avatarPath}</if>
+      <if test="condition.email != null and condition.email != ''">AND email = #{condition.email}</if>
+      <if test="condition.mobile != null and condition.mobile != ''">AND mobile = #{condition.mobile}</if>
+      <if test="condition.createdAt != null">AND created_at = #{condition.createdAt}</if>
+      <if test="condition.regIp != null and condition.regIp != ''">AND reg_ip = #{condition.regIp}</if>
+      <if test="condition.lastLoginTime != null">AND last_login_time = #{condition.lastLoginTime}</if>
+      <if test="condition.lastLoginIp != null and condition.lastLoginIp != ''">AND last_login_ip = #{condition.lastLoginIp}</if>
+      <if test="condition.updatedAt != null">AND updated_at = #{condition.updatedAt}</if>
+      <if test="condition.status != null">AND status = #{condition.status}</if>
+      <if test="condition.registerFrom != null">AND register_from = #{condition.registerFrom}</if>
+      <if test="condition.friendIncomeStatus != null">AND friend_income_status = #{condition.friendIncomeStatus}</if>
+      <if test="condition.sex != null">AND sex = #{condition.sex}</if>
+      <if test="condition.birthday != null">AND birthday = #{condition.birthday}</if>
+      <if test="condition.qq != null and condition.qq != ''">AND qq = #{condition.qq}</if>
+      <if test="condition.signature != null and condition.signature != ''">AND signature = #{condition.signature}</if>
+      <if test="condition.score != null">AND score = #{condition.score}</if>
+      <if test="condition.experience != null">AND experience = #{condition.experience}</if>
+      <if test="condition.continuLogin != null">AND continu_login = #{condition.continuLogin}</if>
+      <if test="condition.login != null">AND login = #{condition.login}</if>
+      <if test="condition.type != null">AND type = #{condition.type}</if>
+      <if test="condition.manager != null">AND manager = #{condition.manager}</if>
+      <if test="condition.salesmanager != null">AND salesmanager = #{condition.salesmanager}</if>
+      <if test="condition.registerId != null and condition.registerId != ''">AND register_id = #{condition.registerId}</if>
+      <if test="condition.sid != null and condition.sid != ''">AND sid = #{condition.sid}</if>
+      <if test="condition.material != null and condition.material != ''">AND material = #{condition.material}</if>
+      <if test="condition.typeid != null">AND typeid = #{condition.typeid}</if>
+      <if test="condition.lx != null">AND lx = #{condition.lx}</if>
+      <if test="condition.referrerId != null">AND referrer_id = #{condition.referrerId}</if>
+      <if test="condition.referrerType != null">AND referrer_type = #{condition.referrerType}</if>
+      <if test="condition.referrerUrl != null and condition.referrerUrl != ''">AND referrer_url = #{condition.referrerUrl}</if>
+      <if test="condition.packageName != null and condition.packageName != ''">AND package_name = #{condition.packageName}</if>
+      <if test="condition.queryStr != null and condition.queryStr != ''">AND query_str = #{condition.queryStr}</if>
+      <if test="condition.area != null and condition.area != ''">AND area = #{condition.area}</if>
+      <if test="condition.invitationCode != null and condition.invitationCode != ''">AND invitation_code = #{condition.invitationCode}</if>
+      <if test="condition.firstInvestAt != null">AND first_invest_at = #{condition.firstInvestAt}</if>
+      <if test="condition.errLoginTimes != null">AND err_login_times = #{condition.errLoginTimes}</if>
+      <if test="!condition.expressionChainList.empty">
+        AND
+        <foreach collection="condition.expressionChainList" item="expressionChain" separator="OR">
+          <if test="!expressionChain.expressionList.empty">
+            <foreach collection="expressionChain.expressionList" item="expression" separator="AND">
+              <choose>
+                <when test="expression.type == 0">
+                  ${expression.column} ${expression.operator}
+                </when>
+                <when test="expression.type == 1">
+                  ${expression.column} ${expression.operator} #{expression.value}
+                </when>
+                <when test="expression.type == 2">
+                  ${expression.column} ${expression.operator} #{expression.value} AND #{expression.value1}
+                </when>
+                <when test="expression.type == 3">
+                  ${expression.column} ${expression.operator}
+                  <foreach collection="expression.values" item="value" open="(" separator="," close=")">
+                    #{value}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </if>
+        </foreach>
+      </if>
+    </if>
+  </sql>
+
+  <sql id="sql_pagination_start">
+  <![CDATA[
+  ]]>
+  </sql>
+
+  <sql id="sql_pagination_end">
+  <![CDATA[
+    LIMIT #{offset}, #{limit}
+  ]]>
+  </sql>
+
+  <insert id="insert" parameterType="java.util.Map">
+    <selectKey keyProperty="entity.id" resultType="java.lang.Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    INSERT INTO ot_ucenter_member (
+      <include refid="sql_insert_column_list" />
+    ) VALUES (
+      <include refid="sql_insert_property_list" />
+    )
+  </insert>
+
+  <select id="get" parameterType="java.util.Map" resultMap="ucenterMember">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_ucenter_member
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="java.util.Map" resultMap="ucenterMember">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_ucenter_member
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultMap="ucenterMember">
+    <if test="offset != null">
+      <include refid="sql_pagination_start" />
+    </if>
+    SELECT
+      <include refid="sql_column_list" />
+    FROM ot_ucenter_member
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end" />
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(${count_column}) AS count_ FROM ot_ucenter_member
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="aggregate" parameterType="java.util.Map" resultType="java.util.HashMap">
+    SELECT ${aggregate_sql} FROM ot_ucenter_member
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <update id="update" parameterType="java.util.Map">
+    UPDATE ot_ucenter_member
+    <include refid="sql_update_set" />
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </update>
+
+  <update id="updateById" parameterType="java.util.Map">
+    UPDATE ot_ucenter_member
+    <include refid="sql_update_set" />
+    WHERE id = #{id}
+  </update>
+
+  <delete id="remove" parameterType="java.util.Map">
+    DELETE FROM ot_ucenter_member
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </delete>
+
+  <delete id="removeById" parameterType="java.util.Map">
+    DELETE FROM ot_ucenter_member
+    WHERE id = #{id}
+  </delete>
+</mapper>

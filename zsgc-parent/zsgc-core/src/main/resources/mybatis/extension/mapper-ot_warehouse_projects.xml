@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="warehouseProjectsDAO">
+	<resultMap id="H_BaseResultMap" type="com.zsgc.core.model.HomePageWarehouseProjects">
+		<id column="p_id" jdbcType="INTEGER" property="pId" />
+		<result column="project_name" jdbcType="VARCHAR" property="projectName" />
+		<result column="state" jdbcType="INTEGER" property="state" />
+		<result column="first_top" jdbcType="TINYINT" property="firstTop" />
+		<result column="u_id" jdbcType="INTEGER" property="uId" />
+	</resultMap>
+
+	<sql id="H_Base_Column_List">
+		`p_id`,
+		`project_name`,
+		`first_top`,
+		u_id,
+		state
+	</sql>
+
+	<select id="selH_ByTopAll" parameterType="com.zsgc.core.model.WarehouseProjects"
+		resultType="java.lang.Integer">
+		select
+		COUNT(0)
+		from ot_warehouse_projects
+		where u_id = #{uId}
+		AND
+		`warehouse_type` = #{warehouseType} AND
+		del_state = #{delState} AND
+		first_top = 1
+		<if test="industry!=null">
+			AND industry = #{industry}
+		</if>
+		<if test="state!=null">
+			AND state = #{state}
+		</if>
+		;
+	</select>
+
+
+	<select id="selH_ByTop" parameterType="java.util.Map" resultMap="H_BaseResultMap">
+		SELECT
+		<include refid="H_Base_Column_List" />
+		FROM
+		`ot_warehouse_projects`
+		where u_id =
+		#{bean.uId} AND
+		warehouse_type =
+		#{bean.warehouseType}
+		AND
+		del_state = #{bean.delState} AND first_top = 1
+		<if test="bean.industry!=null">
+			AND industry = #{bean.industry}
+		</if>
+		<if test="bean.state!=null">
+			AND state = #{bean.state}
+		</if>
+		order by first_top_time desc
+		LIMIT
+		#{count},#{PageSize};
+	</select>
+
+	<select id="selH_ByOther" parameterType="java.util.Map"
+		resultMap="H_BaseResultMap">
+		SELECT
+		<include refid="H_Base_Column_List" />
+		FROM
+		`ot_warehouse_projects`
+		where u_id =
+		#{bean.uId} AND
+		warehouse_type =
+		#{bean.warehouseType}
+		AND
+		del_state = #{bean.delState} AND first_top = 0
+		<if test="bean.industry!=null">
+			AND industry = #{bean.industry}
+		</if>
+		<if test="bean.state!=null">
+			AND state = #{bean.state}
+		</if>
+		order by #{order} desc
+		LIMIT
+		#{count},#{PageSize};
+	</select>
+	<update id="updateH_FirstTop" parameterType="java.util.Map">
+		UPDATE
+		ot_warehouse_projects
+		set
+		`first_top` = #{firstTop},
+		`first_top_time` =
+		#{time}
+		where `p_id` = #{pId}
+	</update>
+</mapper>

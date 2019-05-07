@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projectDescriptionPictureDAO">
+	<resultMap id="BaseResultMap"
+		type="com.zsgc.core.model.ProjectDescriptionPicture">
+		<id column="des_p_id" jdbcType="INTEGER" property="desPId" />
+		<result column="p_url" jdbcType="VARCHAR" property="pUrl" />
+		<result column="p_state" jdbcType="INTEGER" property="pState" />
+		<result column="des_id" jdbcType="INTEGER" property="desId" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		des_p_id, p_url, p_state, des_id
+	</sql>
+
+	<select id="getList" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_project_description_picture
+		where des_id =
+		#{desId,jdbcType=INTEGER} and p_state = 1
+	</select>
+
+	<insert id="insert" parameterType="java.util.Map">
+		insert into
+		ot_project_description_picture (des_p_id, p_url, p_state,
+		des_id)
+		values (#{entity.desPId,jdbcType=INTEGER},
+		#{entity.pUrl,jdbcType=VARCHAR},
+		#{entity.pState,jdbcType=INTEGER},
+		#{entity.desId,jdbcType=INTEGER})
+	</insert>
+
+	<update id="updateById" parameterType="java.util.Map">
+		update
+		ot_project_description_picture
+		set p_url =
+		#{entity.pUrl,jdbcType=VARCHAR},
+		p_state =
+		#{entity.pState,jdbcType=INTEGER},
+		des_id =
+		#{entity.desId,jdbcType=INTEGER}
+		where des_p_id =
+		#{entity.desPId,jdbcType=INTEGER} and p_state = 1
+	</update>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_project_description_picture
+		where des_p_id = #{desPId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from ot_project_description_picture
+		where des_p_id = #{desPId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertSelective"
+		parameterType="com.zsgc.core.model.ProjectDescriptionPicture">
+		insert into ot_project_description_picture
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="desPId != null">
+				des_p_id,
+			</if>
+			<if test="pUrl != null">
+				p_url,
+			</if>
+			<if test="pState != null">
+				p_state,
+			</if>
+			<if test="desId != null">
+				des_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="desPId != null">
+				#{desPId,jdbcType=INTEGER},
+			</if>
+			<if test="pUrl != null">
+				#{pUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="pState != null">
+				#{pState,jdbcType=INTEGER},
+			</if>
+			<if test="desId != null">
+				#{desId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.zsgc.core.model.ProjectDescriptionPicture">
+		update ot_project_description_picture
+		<set>
+			<if test="pUrl != null">
+				p_url = #{pUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="pState != null">
+				p_state = #{pState,jdbcType=INTEGER},
+			</if>
+			<if test="desId != null">
+				des_id = #{desId,jdbcType=INTEGER},
+			</if>
+		</set>
+		where des_p_id = #{desPId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.zsgc.core.model.ProjectDescriptionPicture">
+		update ot_project_description_picture
+		set p_url = #{pUrl,jdbcType=VARCHAR},
+		p_state = #{pState,jdbcType=INTEGER},
+		des_id = #{desId,jdbcType=INTEGER}
+		where des_p_id = #{desPId,jdbcType=INTEGER}
+	</update>
+	
+	<select id="selectByDesId" parameterType="com.zsgc.core.model.ProjectDescriptionPicture" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ot_project_description_picture
+    where des_id = #{desId,jdbcType=INTEGER} 
+     <if test="pState != null">
+       AND p_state = #{pState,jdbcType=INTEGER}
+     </if>
+  </select>
+	
+	<insert id="insertMore" parameterType="java.util.List">
+		
+			insert into
+			ot_project_description_picture ( p_url, p_state,
+			des_id)
+			values 
+			<foreach collection="list" item="bean" index="index" separator=","> 
+			(
+			#{bean.pUrl,jdbcType=VARCHAR},
+			#{bean.pState,jdbcType=INTEGER},
+			#{bean.desId,jdbcType=INTEGER})
+		</foreach>
+	</insert>
+</mapper>

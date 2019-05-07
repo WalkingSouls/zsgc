@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="taskTimeDAO">
+	<resultMap id="BaseResultMap"
+		type="com.zsgc.core.model.TaskTime">
+		<id column="time_id" jdbcType="INTEGER" property="timeId" />
+		<result column="task_id" jdbcType="INTEGER" property="taskId" />
+		<result column="task_date" jdbcType="DATE" property="taskDate" />
+		<result column="start_time" jdbcType="TIME"
+			property="startTime" />
+		<result column="end_time" jdbcType="TIME" property="endTime" />
+		<result column="clock" jdbcType="INTEGER" property="clock" />
+		<result column="del_state" jdbcType="INTEGER"
+			property="delState" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		time_id, task_id, task_date, start_time, end_time, clock, del_state
+	</sql>
+	<select id="getList" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_task_time
+		<trim prefix="where" prefixOverrides="AND" >
+			<if test="condition.taskId != null">
+				task_id = #{condition.taskId,jdbcType=INTEGER}
+			</if>
+			<if test="condition.taskDate != null">
+				AND task_date = #{condition.taskDate,jdbcType=DATE}
+			</if>
+			<if test="condition.startTime != null">
+				AND start_time = #{condition.startTime,jdbcType=TIME}
+			</if>
+			<if test="condition.endTime != null">
+				AND end_time = #{condition.endTime,jdbcType=TIME}
+			</if>
+			<if test="condition.clock != null">
+				AND clock = #{condition.clock,jdbcType=INTEGER}
+			</if>
+			<if test="condition.delState != null">
+				AND del_state = #{condition.delState,jdbcType=INTEGER}
+			</if>
+		</trim>
+	</select>
+    <insert id="insert" parameterType="com.zsgc.core.model.TaskTime">
+        insert into ot_task_time
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="entity.timeId != null">
+                time_id,
+            </if>
+            <if test="entity.taskId != null">
+                task_id,
+            </if>
+            <if test="entity.taskDate != null">
+                task_date,
+            </if>
+            <if test="entity.startTime != null">
+                start_time,
+            </if>
+            <if test="entity.endTime != null">
+                end_time,
+            </if>
+            <if test="entity.clock != null">
+                clock,
+            </if>
+            <if test="entity.delState != null">
+                del_state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="entity.timeId != null">
+                #{entity.timeId,jdbcType=INTEGER},
+            </if>
+            <if test="entity.taskId != null">
+                #{entity.taskId,jdbcType=INTEGER},
+            </if>
+            <if test="entity.taskDate != null">
+                #{entity.taskDate,jdbcType=DATE},
+            </if>
+            <if test="entity.startTime != null">
+                #{entity.startTime,jdbcType=TIME},
+            </if>
+            <if test="entity.endTime != null">
+                #{entity.endTime,jdbcType=TIME},
+            </if>
+            <if test="entity.clock != null">
+                #{entity.clock,jdbcType=INTEGER},
+            </if>
+            <if test="entity.delState != null">
+                #{entity.delState,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <delete id="removeById" parameterType="java.util.Map">
+        delete from ot_task_time where task_id=#{id}
+    </delete>
+
+
+
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_task_time
+		where time_id = #{timeId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from ot_task_time
+		where time_id = #{timeId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert1" parameterType="com.zsgc.core.model.TaskTime">
+		insert into ot_task_time (time_id, task_id, task_date,
+		start_time, end_time, clock,
+		del_state)
+		values (#{timeId,jdbcType=INTEGER}, #{taskId,jdbcType=INTEGER},
+		#{taskDate,jdbcType=DATE},
+		#{startTime,jdbcType=TIME}, #{endTime,jdbcType=TIME}, #{clock,jdbcType=INTEGER},
+		#{delState,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.zsgc.core.model.TaskTime">
+		insert into ot_task_time
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="timeId != null">
+				time_id,
+			</if>
+			<if test="taskId != null">
+				task_id,
+			</if>
+			<if test="taskDate != null">
+				task_date,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="clock != null">
+				clock,
+			</if>
+			<if test="delState != null">
+				del_state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="timeId != null">
+				#{timeId,jdbcType=INTEGER},
+			</if>
+			<if test="taskId != null">
+				#{taskId,jdbcType=INTEGER},
+			</if>
+			<if test="taskDate != null">
+				#{taskDate,jdbcType=DATE},
+			</if>
+			<if test="startTime != null">
+				#{startTime,jdbcType=TIME},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=TIME},
+			</if>
+			<if test="clock != null">
+				#{clock,jdbcType=INTEGER},
+			</if>
+			<if test="delState != null">
+				#{delState,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.zsgc.core.model.TaskTime">
+		update ot_task_time
+		<set>
+			<if test="taskId != null">
+				task_id = #{taskId,jdbcType=INTEGER},
+			</if>
+			<if test="taskDate != null">
+				task_date = #{taskDate,jdbcType=DATE},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime,jdbcType=TIME},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=TIME},
+			</if>
+			<if test="clock != null">
+				clock = #{clock,jdbcType=INTEGER},
+			</if>
+			<if test="delState != null">
+				del_state = #{delState,jdbcType=INTEGER},
+			</if>
+		</set>
+		where time_id = #{timeId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.zsgc.core.model.TaskTime">
+		update ot_task_time
+		set task_id = #{taskId,jdbcType=INTEGER},
+		task_date = #{taskDate,jdbcType=DATE},
+		start_time = #{startTime,jdbcType=TIME},
+		end_time = #{endTime,jdbcType=TIME},
+		clock = #{clock,jdbcType=INTEGER},
+		del_state = #{delState,jdbcType=INTEGER}
+		where time_id = #{timeId,jdbcType=INTEGER}
+	</update>
+</mapper>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="taskMsgDAO">
+	<resultMap id="BaseResultMap" type="com.zsgc.core.model.TaskMsg">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="t_id" jdbcType="INTEGER" property="tId" />
+		<result column="m_id" jdbcType="BIGINT" property="mId" />
+		<result column="invalid" jdbcType="TINYINT" property="invalid" />
+		<result column="creat_at" jdbcType="TIMESTAMP" property="creatAt" />
+		<result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+		<result column="push_at" jdbcType="TIMESTAMP" property="pushAt" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, t_id, m_id, invalid, creat_at, update_at, push_at
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ot_task_msg
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		ot_task_msg
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.zsgc.core.model.TaskMsg">
+		insert into ot_task_msg (id,
+		t_id, m_id, invalid,
+		creat_at, update_at, push_at
+		)
+		values
+		(#{id,jdbcType=BIGINT}, #{tId,jdbcType=INTEGER},
+		#{mId,jdbcType=BIGINT}, #{invalid,jdbcType=TINYINT},
+		#{creatAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP},
+		#{pushAt,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.zsgc.core.model.TaskMsg">
+		insert into ot_task_msg
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="tId != null">
+				t_id,
+			</if>
+			<if test="mId != null">
+				m_id,
+			</if>
+			<if test="invalid != null">
+				invalid,
+			</if>
+			<if test="creatAt != null">
+				creat_at,
+			</if>
+			<if test="updateAt != null">
+				update_at,
+			</if>
+			<if test="pushAt != null">
+				push_at,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="tId != null">
+				#{tId,jdbcType=INTEGER},
+			</if>
+			<if test="mId != null">
+				#{mId,jdbcType=BIGINT},
+			</if>
+			<if test="invalid != null">
+				#{invalid,jdbcType=TINYINT},
+			</if>
+			<if test="creatAt != null">
+				#{creatAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateAt != null">
+				#{updateAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="pushAt != null">
+				#{pushAt,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.zsgc.core.model.TaskMsg">
+		update ot_task_msg
+		<set>
+			<if test="tId != null">
+				t_id = #{tId,jdbcType=INTEGER},
+			</if>
+			<if test="mId != null">
+				m_id = #{mId,jdbcType=BIGINT},
+			</if>
+			<if test="invalid != null">
+				invalid = #{invalid,jdbcType=TINYINT},
+			</if>
+			<if test="creatAt != null">
+				creat_at = #{creatAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateAt != null">
+				update_at = #{updateAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="pushAt != null">
+				push_at = #{pushAt,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.zsgc.core.model.TaskMsg">
+		update ot_task_msg
+		set t_id = #{tId,jdbcType=INTEGER},
+		m_id = #{mId,jdbcType=BIGINT},
+		invalid = #{invalid,jdbcType=TINYINT},
+		creat_at =
+		#{creatAt,jdbcType=TIMESTAMP},
+		update_at =
+		#{updateAt,jdbcType=TIMESTAMP},
+		push_at = #{pushAt,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<select id="selMsgByTid" parameterType="java.lang.Integer"
+		resultType="java.lang.Long">
+		SELECT
+		`m_id`
+		FROM
+		ot_task_msg
+		WHERE t_id = #{id} and invalid =
+		1
+	</select>
+
+	<update id="updateByMid" parameterType="java.util.Map">
+		UPDATE
+		`ot_task_msg`
+		SET
+		`invalid` = 0,
+		update_at = #{updateAt,jdbcType=TIMESTAMP}
+		WHERE `m_id` = #{mId};
+	</update>
+
+	<delete id="delByMid" parameterType="java.lang.Long">
+		DELETE
+		FROM
+		`ot_task_msg`
+		WHERE `m_id` = #{id};
+	</delete>
+</mapper>

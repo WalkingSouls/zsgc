@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="testDAO">
+	<resultMap id="Test" type="com.zsgc.core.model.Test">
+		<result property="a" column="a" />
+	</resultMap>
+	  <sql id="sql_insert_column_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.a != null">,a</if>
+
+    </trim>
+  </sql>
+  <sql id="sql_insert_property_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.a != null">,#{entity.a}</if>
+      
+    </trim>
+  </sql>
+	  <insert id="insert" parameterType="java.util.Map">
+    insert into test (
+      <include refid="sql_insert_column_list" />
+    ) VALUES (
+      <include refid="sql_insert_property_list" />
+    )
+  </insert>
+</mapper>

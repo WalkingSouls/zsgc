@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybankDAO">
+<select id="getBankList" parameterType="java.util.Map" resultType="com.zsgc.core.model.BankInfo">
+  select ob.code,ob.name as bankName,ob.status,om.id as mybankId,om.uid,om.number,om.name as userName 
+  from ot_mybank om left join ot_bank ob on om.bid = ob.id 
+  <if test="condition!=null">
+    where uid = #{condition.uid}
+  </if>
+  <if test="orderBy != null">
+    order by ${orderBy}
+  </if>
+</select>
+</mapper>
